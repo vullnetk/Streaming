@@ -42,7 +42,7 @@ export function deleteCastCrewRole(id) {
             return response.data;
         })
         .catch(error => {
-            console.error('Failed to delete cast Crew Role:', error);
+            console.error('Failed to delete delete cast Crew Role:', error);
             throw error;
         });
 }
