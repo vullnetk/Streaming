@@ -1,12 +1,17 @@
 <template>
   <div id="app">
+    <AppHeader />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import AppHeader from './components/Header.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    AppHeader
+  }
 };
 </script>
 
@@ -17,6 +22,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+ 
 }
 </style>
+
+<!-- comment -->
