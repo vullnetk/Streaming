@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
 const connectionString = 'mongodb://127.0.0.1/eStreaming';
 
 mongoose.connect(connectionString, {
@@ -6,14 +8,11 @@ mongoose.connect(connectionString, {
   useUnifiedTopology: true,
 });
 
-const db = mongoose.connection;
-
-db.on('error', (error) => {
-  console.error('Failed to connect to MongoDB:', error);
+mongoose.connection.once('open', function () {
+  console.log('Connected');
+}).on('error', function (error) {
+  console.log('Connection error: ' + error);
 });
 
-db.once('open', () => {
-  console.log('Connected to MongoDB!');
-});
 
-module.exports = db;
+module.exports = mongoose;

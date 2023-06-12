@@ -1,6 +1,7 @@
 const express = require('express');
 const genresController = require('../controllers/genresController');
 const castCrewRolesController = require('../controllers/castCrewRolesController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
@@ -23,6 +24,10 @@ router.post('/castCrewRoles/add', castCrewRolesController.addCastCrewRole);
 router.put('/castCrewRoles/edit/:id', castCrewRolesController.editCastCrewRole);
 // Delete a cast crew role
 router.delete('/castCrewRoles/delete/:id', castCrewRolesController.deleteCastCrewRole);
+
+//User
+router.post('/insertUser', userController.insert_user);
+router.get('/user/:uid', userController.get_user);
 
 module.exports = router;
 
