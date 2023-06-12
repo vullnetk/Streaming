@@ -29,6 +29,13 @@ router.delete('/castCrewRoles/delete/:id', castCrewRolesController.deleteCastCre
 router.post('/insertUser', userController.insert_user);
 router.get('/user/:uid', userController.get_user);
 
+//Subscription
+router.get('/subscriptions', subscriptionController.get_subscriptions);
+router.get('/subscription/:id', subscriptionController.get_subscription);
+router.post('/uploadSubscription', subscriptionController.insert_subscription);
+router.put('/editsubscription/:id',subscriptionController.edit_subscription);
+router.delete('/subscription/delete/:id', subscriptionController.delete_subscription);
+
 module.exports = router;
 
 
