@@ -2,6 +2,8 @@ const express = require('express');
 const genresController = require('../controllers/genresController');
 const castCrewRolesController = require('../controllers/castCrewRolesController');
 const castCrewController = require('../controllers/castCrewController');
+const userController = require('../controllers/userController');
+const subscriptionController = require('../controllers/subscriptionController')
 
 const router = express.Router();
 
@@ -25,6 +27,7 @@ router.put('/castCrewRoles/edit/:id', castCrewRolesController.editCastCrewRole);
 // Delete a cast crew role
 router.delete('/castCrewRoles/delete/:id', castCrewRolesController.deleteCastCrewRole);
 
+
 // Fetch all castCrews
 router.get('/castCrews', castCrewController.getAllcastCrews);
 // Add a new castCrew
@@ -34,7 +37,15 @@ router.put('/castCrew/edit/:id', castCrewController.editCastCrew);
 // Delete a castCrew 
 router.delete('/castCrews/delete/:id', castCrewController.deleteCastCrew);
 
+//User
+router.post('/insertUser', userController.insert_user);
+router.get('/user/:uid', userController.get_user);
+
+//Subscription
+router.get('/subscriptions', subscriptionController.get_subscriptions);
+router.get('/subscription/:id', subscriptionController.get_subscription);
+router.post('/uploadSubscription', subscriptionController.insert_subscription);
+router.put('/editsubscription/:id', subscriptionController.edit_subscription);
+router.delete('/subscription/delete/:id', subscriptionController.delete_subscription);
+
 module.exports = router;
-
-
-//comment
