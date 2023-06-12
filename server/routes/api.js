@@ -2,6 +2,7 @@ const express = require('express');
 const genresController = require('../controllers/genresController');
 const castCrewRolesController = require('../controllers/castCrewRolesController');
 const userController = require('../controllers/userController');
+const subscriptionController = require('../controllers/subscriptionController')
 
 const router = express.Router();
 
@@ -33,7 +34,7 @@ router.get('/user/:uid', userController.get_user);
 router.get('/subscriptions', subscriptionController.get_subscriptions);
 router.get('/subscription/:id', subscriptionController.get_subscription);
 router.post('/uploadSubscription', subscriptionController.insert_subscription);
-router.put('/editsubscription/:id',subscriptionController.edit_subscription);
+router.put('/editsubscription/:id', subscriptionController.edit_subscription);
 router.delete('/subscription/delete/:id', subscriptionController.delete_subscription);
 
 module.exports = router;
