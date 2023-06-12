@@ -27,3 +27,5 @@ const auth = getAuth(app)
 export { app, auth }
 
 createApp(App).use(BootstrapVueNext).use(store).use(router).mount('#app')
+
+//comment

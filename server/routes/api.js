@@ -38,6 +38,3 @@ router.put('/editsubscription/:id', subscriptionController.edit_subscription);
 router.delete('/subscription/delete/:id', subscriptionController.delete_subscription);
 
 module.exports = router;
-
-
-//comment
