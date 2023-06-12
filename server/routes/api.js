@@ -1,6 +1,7 @@
 const express = require('express');
 const genresController = require('../controllers/genresController');
 const castCrewRolesController = require('../controllers/castCrewRolesController');
+const castCrewController = require('../controllers/castCrewController');
 
 const router = express.Router();
 
@@ -23,6 +24,15 @@ router.post('/castCrewRoles/add', castCrewRolesController.addCastCrewRole);
 router.put('/castCrewRoles/edit/:id', castCrewRolesController.editCastCrewRole);
 // Delete a cast crew role
 router.delete('/castCrewRoles/delete/:id', castCrewRolesController.deleteCastCrewRole);
+
+// Fetch all castCrews
+router.get('/castCrews', castCrewController.getAllcastCrews);
+// Add a new castCrew
+router.post('/castCrew/add', castCrewController.addCastCrew);
+// Edit a castCrew
+router.put('/castCrew/edit/:id', castCrewController.editCastCrew);
+// Delete a castCrew 
+router.delete('/castCrews/delete/:id', castCrewController.deleteCastCrew);
 
 module.exports = router;
 

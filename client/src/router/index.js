@@ -44,6 +44,27 @@ const routes = [{
             import ( /* webpackChunkName: "castCrewRolesInsert" */ '../views/castCrewRoles/AddCastCrewRole.vue'),
         // meta: { requiresAuth: true }
     },
+
+    {
+        path: '/castCrews',
+        name: 'castCrews',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "castCrews" */ '../views/CastCrews/CastCrewsList.vue'),
+        // meta: { requiresAuth: true }
+    },
+    {
+        path: '/addcastCrew',
+        name: 'addCastCrew',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "castCrewsInsert" */ '../views/CastCrews/AddCastCrew.vue'),
+        // meta: { requiresAuth: true }
+    },
 ]
 
 const router = createRouter({
