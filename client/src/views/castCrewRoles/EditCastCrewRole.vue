@@ -41,12 +41,12 @@
       methods: {
           async onSubmit() {
               try {
-                  await editCastCrewRole(this.castCrewRole)
-                  toast("Brand edited successfuly", {
+                  await editCastCrewRole(this.castCrewRole.id, this.castCrewRole.role)
+                  toast("Cast crew role edited successfuly", {
                       autoClose: 1000,
                   });
               } catch {
-                  toast("Brand edit failed", {
+                  toast("Cast crew role edit failed", {
                       autoClose: 1000,
                   });
               }
