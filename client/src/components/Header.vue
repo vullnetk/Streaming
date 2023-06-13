@@ -13,7 +13,7 @@
           <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Movie</router-link>
           <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Genres</router-link>
           <router-link to="/castCrewRoles" class="nav-item nav-link w-auto m-auto">Cast Crew Roles</router-link>
-          <router-link to="/addCastCrewRoles" class="nav-item nav-link w-auto m-auto">Cast Crew</router-link>
+          <router-link to="/gneres" class="nav-item nav-link w-auto m-auto">Cast Crew</router-link>
           <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Subscription</router-link>
           <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Users</router-link>
           <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Requests</router-link>

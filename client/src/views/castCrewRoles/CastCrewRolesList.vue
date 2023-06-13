@@ -1,5 +1,8 @@
 <template>
     <div class="books-list">
+        <div class="d-flex justify-content-end mb-3">
+      <router-link to="/addcastCrewRoles" class="btn btn-primary">Add new cast crew role</router-link>
+    </div>
         <vue-good-table
             styleClass="vgt-table condensed"
             :columns="columns"
@@ -31,14 +34,21 @@
                 <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
                     <b-dropdown right no-caret variant="default">
                         <template #button-content>
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                            <i class="fa-solid fa-ellipsis-vertical icon-red"></i>
                         </template>
+                        <b-dropdown-item @click="editCastCrewRole(props.row)">Edit</b-dropdown-item>
+
+                        <b-dropdown-item @click="toggleDeleteModal(props.row)">Delete</b-dropdown-item>
+                        
                         
                         
                     </b-dropdown>
                 </span>
             </template>
         </vue-good-table>
+        <EditModal v-model="showModal" :showModal="showModal" :castCrewRole="castCrewRole" />
+
+        <DeleteModal v-model="showDeleteModal" :itemName="castCrewRole.role" :itemId="castCrewRole.id" @deleteItem="deleteCastCrewRole"/>
         
         
        
@@ -46,16 +56,21 @@
   </template>
   
   <script>
-  
-  import {   fetchCastCrewRoles } from '../../api/castCrewRoles';  //deleteCastCrewRole,
+  import EditModal from './EditCastCrewRole.vue'
 
+  import {  deleteCastCrewRole, fetchCastCrewRoles } from '../../api/castCrewRoles';
+  import DeleteModal from '../../components/DeleteModal.vue'
 
 
 export default {
-  
+    components: {
+        EditModal,
+        DeleteModal
+    },
     data() {
         return {
-            
+            showModal: false,
+            showDeleteModal: false,
             rolesList: [],
             castCrewRole: {},
             columns: [
@@ -71,36 +86,40 @@ export default {
             ],
         }
     },
-     mounted() {
-        this.getRoles();
-        // console.log(this.fetchCastCrewRole)
+    mounted() {
+        this.fetchCastCrewRole()
     },
-     computed: {
+    computed: {
       allRoles() {
-            return this.rolesList,
-            console.log(this.rolesList)
+            return this.rolesList
         }
-        
     },
     methods: {
-        
+        editCastCrewRole(role) {
+            this.showModal = true;
+            this.castCrewRole = role
+        },
 
-        
+        toggleDeleteModal(data) {
+            console.log(data)
+            this.showDeleteModal = true;
+            this.castCrewRole = data;
+        },
 
-        // async deleteCastCrewRole(id) {
-        //     console.log(id)
-        //     try{
-        //         await deleteCastCrewRole(id)
-        //     } catch (err) {
-        //         console.log(err)
-        //     } finally {
-        //         await this.fetchCastCrewRole()
-        //     }
-        // },
-        async getRoles(){
+        async deleteCastCrewRole(id) {
+            console.log(id)
+            try{
+                await deleteCastCrewRole(id)
+            } catch (err) {
+                console.log(err)
+            } finally {
+                await this.fetchCastCrewRole()
+            }
+        },
+        async fetchCastCrewRole(){
             const response = await fetchCastCrewRoles()
             console.log(response)
-            this.rolesList = response.data
+            this.rolesList = response
         }
 
     }
@@ -118,6 +137,9 @@ export default {
         width: 40px;
         height: 40px;
         margin: auto;
+    }
+    .icon-red {
+      color: red; // Specify the desired color here
     }
 
     .product-image{
