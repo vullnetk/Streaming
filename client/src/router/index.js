@@ -90,7 +90,23 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "login" */ '../views/auth/Login.vue'),
         meta: { requiresAuth: false }
-    }, 
+    },
+    
+    {
+        path: '/movies',
+        name: 'movies',
+        component: () =>
+          import ( /* webpackChunkName: "movies" */ '../views/movies/MoviesList.vue'),
+        meta: { requiresAuth: false }
+    },
+
+    {
+        path: '/addMovie',
+        name: 'addMovie',
+        component: () =>
+          import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
+        meta: { requiresAuth: false }
+    },
 ]
 
 const router = createRouter({

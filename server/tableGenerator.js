@@ -15,7 +15,7 @@ const getExistingTables = async () => {
 const generateTables = async () => {
   const existingTables = await getExistingTables();
 
-  const newTables = ['Genres','CastCrewRole', 'CastCrew' ]; // Add the names of new tables to be created
+  const newTables = ['Genres','CastCrewRole', 'CastCrew', 'Movie' ]; // Add the names of new tables to be created
 
   for (const table of newTables) {
     if (!existingTables.includes(table)) {
@@ -50,6 +50,22 @@ const generateTables = async () => {
             )
           `;
           break;
+
+        case 'Movie':
+          createTableQuery = `
+            CREATE TABLE Movie (
+              id INT IDENTITY(1, 1) PRIMARY KEY,
+              Title VARCHAR(255) NOT NULL,
+              MovieYear INT NOT NULL,
+              Description VARCHAR(255) NOT NULL,  
+              CoverImage VARCHAR(255) NOT NULL,
+              MovieLink VARCHAR(255) NOT NULL,
+              isPg BIT NOT NULL,
+              genreId INT NOT NULL,
+              FOREIGN KEY (genreId) REFERENCES Genres(id),
+            )
+           `;
+           break;
 
         default:
           console.log(`Table creation not defined for ${table}`);
