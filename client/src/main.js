@@ -6,10 +6,15 @@ import { BootstrapVueNext } from 'bootstrap-vue-next'
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
+import Vue3Toastify from 'vue3-toastify'
+import VueGoodTablePlugin from 'vue-good-table-next'
+
+import 'vue-good-table-next/dist/vue-good-table-next.css'
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
+
 // import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -26,6 +31,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 export { app, auth }
 
-createApp(App).use(BootstrapVueNext).use(store).use(router).mount('#app')
+createApp(App).use(BootstrapVueNext).use(Vue3Toastify, { autoClose: 3000 }).use(VueGoodTablePlugin).use(store).use(router).mount('#app')
 
 //comment
