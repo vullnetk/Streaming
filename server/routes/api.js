@@ -3,7 +3,8 @@ const genresController = require('../controllers/genresController');
 const castCrewRolesController = require('../controllers/castCrewRolesController');
 const castCrewController = require('../controllers/castCrewController');
 const userController = require('../controllers/userController');
-const subscriptionController = require('../controllers/subscriptionController')
+const subscriptionController = require('../controllers/subscriptionController');
+const movieController = require('../controllers/movieController');
 
 const router = express.Router();
 
@@ -47,5 +48,17 @@ router.get('/subscription/:id', subscriptionController.get_subscription);
 router.post('/uploadSubscription', subscriptionController.insert_subscription);
 router.put('/editsubscription/:id', subscriptionController.edit_subscription);
 router.delete('/subscription/delete/:id', subscriptionController.delete_subscription);
+
+// Fetch all movies
+router.get('/movies', movieController.getAllMovies);
+// Get a single movie by ID
+router.get('/movies/:id', movieController.getMovieById);
+// Create a new movie
+router.post('/createmovie', movieController.createMovie);
+// Update a movie
+router.put('/editmovie/:id', movieController.updateMovie);
+// Delete a movie
+router.delete('/movie/delete/:id', movieController.deleteMovie);
+
 
 module.exports = router;
