@@ -37,6 +37,17 @@ const routes = [{
     },
 
     {
+        path: '/payment',
+        name: 'payment',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "subs" */ '../views/payment/Payment.vue'),
+        // meta: { requiresAuth: true }
+    },
+
+    {
         path: '/castCrewRoles',
         name: 'castCrewRoles',
         // route level code-splitting
