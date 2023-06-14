@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import EditModal from './editCastCrew.vue'
+import EditModal from './EditCastCrew.vue'
 
 import {  deleteCastCrewRole, fetchCastCrew } from '../../api/castCrewRoles';
 import DeleteModal from '../../components/DeleteModal.vue'
