@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // import UserProfile from '../views/UserProfile.vue'
 import * as auth from '../helper/auth'
 import store from '../store'
+import UserProfile from '../views/UserProfile.vue'
+import UserProfile from ''
 
 
 const routes = [{
@@ -84,17 +86,17 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-          import ( /* webpackChunkName: "castCrewsInsert" */ '../views/CastCrews/AddCastCrew.vue'),
+            import ( /* webpackChunkName: "castCrewsInsert" */ '../views/CastCrews/AddCastCrew.vue'),
         // meta: { requiresAuth: true }
-    },       
+    },
     {
         path: '/register',
         name: 'register',
         component: () =>
-          import ( /* webpackChunkName: "register" */ '../views/auth/Register.vue'),
+            import ( /* webpackChunkName: "register" */ '../views/auth/Register.vue'),
         meta: { requiresAuth: false }
-    },       
-        
+    },
+
     {
         path: '/login',
         name: 'login',
@@ -102,12 +104,17 @@ const routes = [{
             import ( /* webpackChunkName: "login" */ '../views/auth/Login.vue'),
         meta: { requiresAuth: false }
     },
-    
+    {
+        path: '/profile',
+        name: 'profile',
+        component: UserProfile,
+        meta: { requiresAuth: true }
+    },
     {
         path: '/movies',
         name: 'movies',
         component: () =>
-          import ( /* webpackChunkName: "movies" */ '../views/movies/MoviesList.vue'),
+            import ( /* webpackChunkName: "movies" */ '../views/movies/MoviesList.vue'),
         meta: { requiresAuth: false }
     },
 
@@ -115,7 +122,7 @@ const routes = [{
         path: '/addMovie',
         name: 'addMovie',
         component: () =>
-          import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
+            import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
         meta: { requiresAuth: false }
     },
     {
@@ -141,7 +148,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(route => route.meta.requiresAuth)) {
-      
+
         const isAuthenticated = checkAuthentication();
 
         if (isAuthenticated) {
@@ -151,16 +158,14 @@ router.beforeEach((to, from, next) => {
             next('/login');
         }
     } else {
-      next();
+        next();
     }
 });
 
 function checkAuthentication() {
-    if(auth.userExists()) return true
+    if (auth.userExists()) return true
     return false;
 }
 
 export default router;
 // comment
-
-
