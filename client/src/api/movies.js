@@ -11,7 +11,7 @@ export function fetchMovies() {
 }
 
 // Get a single movie by ID
-export function fetchMovieById(id) {
+export function getMovieById(id) {
   return axios.get(`/api/movies/${id}`)
     .then(response => response.data)
     .catch(error => {
@@ -44,8 +44,18 @@ export function createMovie(title, year, description, coverImage, movieLink, isP
 }
 
 // Update a movie
-export function updateMovie(id, movieData) {
-  return axios.put(`/api/editmovie/${id}`, movieData)
+export function updateMovie(id, Title, MovieYear, Description, CoverImage, MovieLink, isPg, genreId) {
+  const movieData = {
+    Title: Title,
+    MovieYear: MovieYear,
+    Description: Description,
+    CoverImage: CoverImage,
+    MovieLink: MovieLink,
+    isPg: isPg,
+    genreId: genreId
+  };
+
+  return axios.put(`/api/updatemovie/${id}`, movieData)
     .then(response => {
       console.log('Movie updated successfully');
       return response.data;
@@ -55,6 +65,7 @@ export function updateMovie(id, movieData) {
       throw error;
     });
 }
+
 
 // Delete a movie
 export function deleteMovie(id) {

@@ -124,7 +124,15 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
         meta: { requiresAuth: false }
+    },   
+    {
+        path: '/editMovie',
+        name: 'editMovie',
+        component: () =>
+          import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/EditMovie.vue'),
+        meta: { requiresAuth: false }
     },
+
     {
         path: '/addWishlist',
         name: 'addWishlist',
@@ -140,6 +148,7 @@ const routes = [{
         meta: { requiresAuth: true }
     },
 ]   
+
 
 const router = createRouter({
     history: createWebHashHistory(),

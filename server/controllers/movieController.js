@@ -56,6 +56,7 @@ exports.getMovieById = async (req, res) => {
         WHERE id = ${id}
       `;
       await mssqlConnection.executeQuery(query);
+      console.log('aaaaaaaaa');
       res.sendStatus(200);
     } catch (error) {
       console.error('Failed to update movie:', error);
@@ -66,6 +67,7 @@ exports.getMovieById = async (req, res) => {
   // Delete a movie
   exports.deleteMovie = async (req, res) => {
     const { id } = req.params;
+    console.log(id);
     try {
       const query = `DELETE FROM Movie WHERE id = ${id}`;
       await mssqlConnection.executeQuery(query);
