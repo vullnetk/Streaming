@@ -1,6 +1,6 @@
 const sql = require('msnodesqlv8');
 
-const connectionString = 'Driver={SQL Server Native Client 11.0};Server=DESKTOP-EMU6UPG;Database=eStreaming;Trusted_Connection=Yes;';
+const connectionString = 'Driver={SQL Server Native Client 11.0};Server=REART;Database=eStreaming;Trusted_Connection=Yes;';
 
 const executeQuery = async (query) => {
   return new Promise((resolve, reject) => {
