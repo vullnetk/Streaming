@@ -76,7 +76,7 @@ export default {
           columns: [
               {
                   label: 'Genre Name',
-                  field: 'genre',
+                  field: 'name',
               },
               {
                   label: '',

@@ -13,7 +13,7 @@
                       label="Genre Name"
                   >
                       <b-form-input
-                          v-model="Genre.genre"
+                          v-model="Genre.name"
                           placeholder="Genre Name"
                           required
                       ></b-form-input>
@@ -41,7 +41,7 @@
       methods: {
           async onSubmit() {
               try {
-                  await editGenre(this.Genre.id, this.Genre.genre)
+                  await editGenre(this.Genre.id, this.Genre.name)
                   toast("Genre edited successfuly", {
                       autoClose: 1000,
                   });
