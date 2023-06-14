@@ -7,7 +7,7 @@
                   label="Cast Crew Name"
               >
                   <b-form-input
-                      v-model="castCrew.fullName"
+                      v-model="CastCrew.fullName"
                       placeholder="Cast Crew name"
                       required
                       
@@ -20,14 +20,14 @@
 </template>
 
 <script>
-import { addCastCrew } from '../../api/CastCrews'
+import { addCastCrew } from '../../api/castCrew'
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css'; 
 export default{
   name: 'AddCastCrew',
   data() {
       return {
-          castCrew: {
+          CastCrew: {
               fullName: ''
           },
       
@@ -38,7 +38,7 @@ export default{
       async onSubmit() {
           
           try{
-              await addCastCrew(this.castCrew.fullName)
+              await addCastCrew(this.CastCrew.fullName)
               this.resetForm()
               toast("Upcoming product uploaded successfuly", {
                   autoClose: 1000,
@@ -51,7 +51,7 @@ export default{
       },
 
       resetForm() {
-          this.castCrew.fullName = ""
+          this.CastCrew.fullName = ""
       }
   }
 }
