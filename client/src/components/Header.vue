@@ -5,6 +5,7 @@
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
+
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item href="#">Home</b-nav-item>
@@ -19,8 +20,7 @@
             <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Requests</router-link>
           </b-nav-item-dropdown>
         </b-navbar-nav>
-
-     
+    
         <b-navbar-nav class="ml-auto">
           <b-nav-item href="#">Log out</b-nav-item>
           <router-link to="/profile" class="nav-item nav-link w-auto m-auto">Hello user</router-link>
