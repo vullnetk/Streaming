@@ -45,7 +45,7 @@ const generateTables = async () => {
             CREATE TABLE CastCrew (
               id INT IDENTITY(1,1) PRIMARY KEY,
               fullName VARCHAR(255) NOT NULL,
-              roleId INT NOT NULL UNIQUE,
+              roleId INT NOT NULL,
               FOREIGN KEY (roleId) REFERENCES CastCrewRole(id)
             )
           `;
