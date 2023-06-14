@@ -118,6 +118,14 @@ const routes = [{
           import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
         meta: { requiresAuth: false }
     },
+    
+    {
+        path: '/editMovie',
+        name: 'editMovie',
+        component: () =>
+          import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/EditMovie.vue'),
+        meta: { requiresAuth: false }
+    },
 ]
 
 const router = createRouter({

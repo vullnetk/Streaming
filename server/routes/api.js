@@ -10,6 +10,8 @@ const router = express.Router();
 
 // Fetch all genres
 router.get('/genres', genresController.getAllGenres);
+// Get a Genre by Id
+router.get('/genres/:id', genresController.getGenreById);
 // Add a new genre
 router.post('/genres/add', genresController.addGenre);
 // Edit a genre
@@ -56,7 +58,7 @@ router.get('/movies/:id', movieController.getMovieById);
 // Create a new movie
 router.post('/createmovie', movieController.createMovie);
 // Update a movie
-router.put('/editmovie/:id', movieController.updateMovie);
+router.put('/updatemovie/:id', movieController.updateMovie);
 // Delete a movie
 router.delete('/movie/delete/:id', movieController.deleteMovie);
 

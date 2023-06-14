@@ -11,6 +11,15 @@ export function fetchGenres() {
     });
 }
 
+export function getGenreById(id) {
+  return axios.get(`/api/genres/${id}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Failed to fetch movie:', error);
+      throw error;
+    });
+}
+
 export function addGenre(name) {
     return axios.post('/api/genres/add', { name })
       .then(response => {
