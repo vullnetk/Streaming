@@ -1,7 +1,7 @@
 <template>
   <div class="books-list">
       <div class="d-flex justify-content-end mb-3">
-    <router-link to="/addcastCrew" class="btn btn-primary">Add new cast crew fullName</router-link>
+    <router-link to="/addcastCrew" class="btn btn-primary">Add new cast crew </router-link>
   </div>
       <vue-good-table
           styleClass="vgt-table condensed"
@@ -46,9 +46,9 @@
               </span>
           </template>
       </vue-good-table>
-      <EditModal v-model="showModal" :showModal="showModal" :castCrew="castCrew" />
+      <EditModal v-model="showModal" :showModal="showModal" :CastCrew="CastCrew" />
 
-      <DeleteModal v-model="showDeleteModal" :itemName="castCrew.fullName" :itemId="castCrew.id" @deleteItem="deleteCastCrewRole"/>
+      <DeleteModal v-model="showDeleteModal" :itemName="CastCrew.fullName" :itemId="CastCrew.id" @deleteItem="deleteCastCrew"/>
       
       
      
@@ -58,7 +58,7 @@
 <script>
 import EditModal from './EditCastCrew.vue'
 
-import {  deleteCastCrewRole, fetchCastCrew } from '../../api/castCrewRoles';
+import {  deleteCastCrew, fetchCastCrews } from '../../api/castCrew';
 import DeleteModal from '../../components/DeleteModal.vue'
 
 
@@ -72,7 +72,7 @@ export default {
           showModal: false,
           showDeleteModal: false,
           castcrewsList: [],
-          castCrew: {},
+          CastCrew: {},
           columns: [
               {
                   label: 'Cast Crew Name',
@@ -87,7 +87,7 @@ export default {
       }
   },
   mounted() {
-      this.fetchCastCrew()
+      this.fetchCastCrews()
   },
   computed: {
     allCastCrews() {
@@ -97,27 +97,27 @@ export default {
   methods: {
       editCastCrew(fullName) {
           this.showModal = true;
-          this.castCrew = fullName
+          this.CastCrew = fullName
       },
 
       toggleDeleteModal(data) {
           console.log(data)
           this.showDeleteModal = true;
-          this.castCrew = data;
+          this.CastCrew = data;
       },
 
-      async deleteCastCrewRole(id) {
+      async deleteCastCrew(id) {
           console.log(id)
           try{
-              await deleteCastCrewRole(id)
+              await deleteCastCrew(id)
           } catch (err) {
               console.log(err)
           } finally {
-              await this.fetchCastCrew()
+              await this.fetchCastCrews()
           }
       },
-      async fetchCastCrew(){
-          const response = await fetchCastCrew()
+      async fetchCastCrews(){
+          const response = await fetchCastCrews()
           console.log(response)
           this.castcrewsList = response
       }
