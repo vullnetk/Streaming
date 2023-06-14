@@ -39,7 +39,7 @@
               <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
                   <b-dropdown right no-caret variant="default">
                       <template #button-content>
-                          <i class="fa-solid fa-ellipsis-vertical icon-red"></i>
+                          <i class="fa-solid fa-ellipsis-vertical"></i>
                       </template>
                       <b-dropdown-item @click="updateMovie(props.row)">Edit</b-dropdown-item>
 
@@ -142,7 +142,7 @@ export default {
     toggleDeleteModal(data) {
       console.log(data)
       this.showDeleteModal = true;
-      this.movie = data;
+      this.newMovie = data;
     },
 
     async deleteMovie(id) {

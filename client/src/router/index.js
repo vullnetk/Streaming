@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import * as auth from '../helper/auth'
 import store from '../store'
 import UserProfile from '../views/UserProfile.vue'
-import UserProfile from ''
+
 
 
 const routes = [{

@@ -69,6 +69,7 @@ export function updateMovie(id, Title, MovieYear, Description, CoverImage, Movie
 
 // Delete a movie
 export function deleteMovie(id) {
+  console.log(id)
   return axios.delete(`/api/movie/delete/${id}`)
     .then(response => {
       console.log('Movie deleted successfully');
