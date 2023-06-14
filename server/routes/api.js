@@ -5,6 +5,7 @@ const castCrewController = require('../controllers/castCrewController');
 const userController = require('../controllers/userController');
 const subscriptionController = require('../controllers/subscriptionController');
 const movieController = require('../controllers/movieController');
+const wishlistController = require('../controllers/wishlistController');
 
 const router = express.Router();
 
@@ -62,5 +63,11 @@ router.put('/updatemovie/:id', movieController.updateMovie);
 // Delete a movie
 router.delete('/movie/delete/:id', movieController.deleteMovie);
 
+//Wishlist
+router.get('/wishlists', wishlistController.getAllWishlists);
+router.post('/addToWishlist', wishlistController.addToWishlist);
+router.put('/approveRequest/:id', wishlistController.approveRequest);
+router.put('/rejectRequest/:id', wishlistController.rejectRequest);
+router.get('/myWishlist', wishlistController.getUserWishlists)
 
 module.exports = router;
