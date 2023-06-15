@@ -79,6 +79,27 @@ const routes = [{
     },
 
     {
+        path: '/successp',
+        name: 'successp',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "successp" */ '../views/payment/SuccessView.vue'),
+        // meta: { requiresAuth: true }
+    },
+    {
+        path: '/errorp',
+        name: 'errorp',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "errorp" */ '../views/payment/ErrorView.vue'),
+        // meta: { requiresAuth: true }
+    },
+
+    {
         path: '/castCrewRoles',
         name: 'castCrewRoles',
         // route level code-splitting

@@ -2,14 +2,14 @@
     <div>
         <stripe-checkout ref="checkoutRef" mode="subscription" :pk="publishableKey" :line-items="lineItems"
             :success-url="successURL" :cancel-url="cancelURL" @loading="v => loading = v" />
-        <h1>hey</h1>
+        <h1>Super</h1>
         <div class="product">
             <div class="image-container">
                 <img
                     src="https://images.ctfassets.net/4cd45et68cgf/5ZVnTR7jyrRs0lePAlVT71/0a7c103de12f7a4c0b6c3b6edd535298/Ads_Plan_Blog_Header_Image.png?w=2000" />
             </div>
             <div class="details-container">
-                <h1>Basic subscription</h1>
+                <h1>Super Plan</h1>
                 <p class="description">Basic subscription with 1140p Max Qality</p>
                 <p class="price">Price: 8.99</p>
                 <button @click="submit">Buy Now</button>
@@ -31,7 +31,7 @@ export default {
             loading: false,
             lineItems: [
                 {
-                    price: 'price_1NIsBAKQT0eVZi5gOzGg9N0G', // The id of the recurring price you created in your Stripe dashboard
+                    price: 'price_1NIulQKQT0eVZi5gaPIAzbWB', // The id of the recurring price you created in your Stripe dashboard
                     quantity: 1,
                 },
 
