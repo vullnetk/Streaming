@@ -45,7 +45,59 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "subs" */ '../views/payment/Payment.vue'),
+            import ( /* webpackChunkName: "payment" */ '../views/payment/Payment.vue'),
+        // meta: { requiresAuth: true }
+    },
+    {
+        path: '/subplans',
+        name: 'subplans',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "subplans" */ '../views/payment/BasicPlan.vue'),
+        // meta: { requiresAuth: true }
+    },
+
+    {
+        path: '/superplan',
+        name: 'superplan',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "superplan" */ '../views/payment/SuperPlan.vue'),
+        // meta: { requiresAuth: true }
+    },
+    {
+        path: '/ultraplan',
+        name: 'ultraplan',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "ultraplan" */ '../views/payment/UltraPlan.vue'),
+        // meta: { requiresAuth: true }
+    },
+
+    {
+        path: '/successp',
+        name: 'successp',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "successp" */ '../views/payment/SuccessView.vue'),
+        // meta: { requiresAuth: true }
+    },
+    {
+        path: '/errorp',
+        name: 'errorp',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "errorp" */ '../views/payment/ErrorView.vue'),
         // meta: { requiresAuth: true }
     },
 
