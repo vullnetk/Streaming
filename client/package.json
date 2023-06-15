@@ -15,6 +15,7 @@
         "bootstrap-vue-next": "^0.9.4",
         "core-js": "^3.8.3",
         "firebase": "^9.22.2",
+        "font-awesome": "^4.7.0",
         "sass": "^1.63.3",
         "sass-loader": "^13.3.2",
         "vue": "^3.2.13",

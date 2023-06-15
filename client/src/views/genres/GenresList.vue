@@ -34,7 +34,7 @@
               <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
                   <b-dropdown right no-caret variant="default">
                       <template #button-content>
-                          <i class="fa-solid fa-ellipsis-vertical icon-red"></i>
+                          <i class="fa-solid fa-ellipsis-vertical"></i>
                       </template>
                       <b-dropdown-item @click="editGenre(props.row)">Edit</b-dropdown-item>
 
@@ -51,7 +51,6 @@
       <DeleteModal v-model="showDeleteModal" :itemName="Genre.genre" :itemId="Genre.id" @deleteItem="deleteGenre"/>
       
       
-     
   </div>
 </template>
 

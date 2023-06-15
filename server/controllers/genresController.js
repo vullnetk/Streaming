@@ -12,6 +12,21 @@ exports.getAllGenres = async (req, res) => {
     }
   };
 
+  exports.getGenreById = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const query = `SELECT * FROM Genres WHERE id = ${id}`;
+      const result = await mssqlConnection.executeQuery(query);
+      if (result.length === 0) {
+        return res.status(404).json({ error: 'Genre not found' });
+      }
+      res.json(result[0]);
+    } catch (error) {
+      console.error('Failed to fetch genre:', error);
+      res.status(500).json({ error: 'Failed to fetch genre' });
+    }
+  };
+
   // Add a new genre
   exports.addGenre = async (req, res) => {
     const { name } = req.body;
