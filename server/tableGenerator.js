@@ -82,6 +82,20 @@ const generateTables = async () => {
             `;
             break;
 
+
+            case 'CastCrewMovie':
+              createTableQuery = `
+              CREATE TABLE CastCrewMovie (
+                id INT IDENTITY(1,1) PRIMARY KEY,
+                castCrewId INT NOT NULL,
+                movieId INT NOT NULL,
+                FOREIGN KEY (castCrewId) REFERENCES CastCrew(id),
+                FOREIGN KEY (movieId) REFERENCES Movie(id),
+                
+              );
+              
+              `;
+
         default:
           console.log(`Table creation not defined for ${table}`);
           continue;
