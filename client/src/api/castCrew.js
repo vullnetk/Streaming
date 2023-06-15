@@ -24,7 +24,15 @@ export function addCastCrew(fullName, roleId) {
 }
 
 export function editCastCrew(id, fullName, roleId) {
-    return axios.put(`/api/castCrew/edit/${id}`, { fullName, roleId })
+    console.log (fullName);
+    console.log(roleId);
+    const data = {
+        fullName: fullName,
+        roleId: roleId
+       
+      };
+    
+    return axios.put(`/api/castCrew/edit/${id}`, data)
         .then(response => {
             console.log('castCrew edited successfully');
             return response.data;

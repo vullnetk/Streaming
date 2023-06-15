@@ -1,101 +1,190 @@
 <template>
-    <div>
-      <h2>CastCrew List</h2>
-      <ul>
-        <li v-for="castCrew in castCrews" :key="castCrew.id">
-            {{ castCrew.fullName }}
-            <button @click="editCastCrew(castCrew)">Edit</button>
-          <button @click="deleteCastCrew(castCrew.id)">Delete</button>
-        </li>
-      </ul>
-      <form @submit.prevent="addCastCrew">
-        <input type="text" v-model="newCastCrew" placeholder="Enter castCrew " />
-        <select v-model="selectedRole">
-          <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.role }}</option>
-        </select>
-        <button type="submit">Add CastCrew</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import { addCastCrew, deleteCastCrew, editCastCrew, fetchCastCrews } from '@/api/castCrew';
-  import { fetchCastCrewRoles  } from '../../api/castCrewRoles';
+  <div class="books-list">
+      <div class="d-flex justify-content-end mb-3">
+    <router-link to="/addcastCrew" class="btn btn-primary">Add new cast crew </router-link>
+  </div>
+      <vue-good-table
+          styleClass="vgt-table condensed"
+          :columns="columns"
+          :rows="allCastCrews"
+          theme="polar-bear"
+          :sort-options="{
+              enabled: false, 
+          }"
+          :search-options="{
+              enabled: true,
+              skipDiacritics: true,
+              placeholder: 'Search...',
+          }"
+          :pagination-options="{
+              enabled: true,
+              mode: 'records',
+              perPage: 7,
+              position: 'bottom',
+              perPageDropdown: [3, 7, 9],
+              dropdownAllowAll: false,
+              nextLabel: 'Next',
+              prevLabel: 'Previous',
+              rowsPerPageLabel: 'Rows per page',
+          }"
+          :line-numbers="true"
+      >
+          <template v-slot:table-row="props">
+            <span v-if="props.column.field == 'role.role'">
+                  {{ getRoleName(props.row.roleId) }}
+                 </span>
+              <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
+                  <b-dropdown right no-caret variant="default">
+                      <template #button-content>
+                          <i class="fa-solid fa-ellipsis-vertical icon-red"></i>
+                      </template>
+                      <b-dropdown-item @click="editCastCrew(props.row)">Edit</b-dropdown-item>
 
-  
-  export default {
-    name: 'CastCrewsList',
-    data() {
+                      <b-dropdown-item @click="toggleDeleteModal(props.row)">Delete</b-dropdown-item>
+                      
+                      
+                      
+                  </b-dropdown>
+              </span>
+          </template>
+      </vue-good-table>
+      <EditModal v-model="showModal" :showModal="showModal" :CastCrew="CastCrew" />
+
+      <DeleteModal v-model="showDeleteModal" :itemName="CastCrew.fullName" :itemId="CastCrew.id" @deleteItem="deleteCastCrew"/>
+      
+      
+     
+  </div>
+</template>
+
+<script>
+import EditModal from './EditCastCrew.vue'
+
+import {  deleteCastCrew, fetchCastCrews } from '../../api/castCrew';
+import DeleteModal from '../../components/DeleteModal.vue';
+import { fetchCastCrewRoles } from "../../api/castCrewRoles";
+
+
+export default {
+  components: {
+      EditModal,
+      DeleteModal
+  },
+  data() {
       return {
-        castCrews: [],
-        newCastCrew: '',
-        roles: '',
+          showModal: false,
+          showDeleteModal: false,
+          castcrewsList: [],
+          CastCrew: {},
+          roles: [],
+          role: "",
+          columns: [
+              {
+                  label: 'Cast Crew Name',
+                  field: 'fullName',
+              },
+              {
+                  label: 'Cast Crew Role',
+                  field: 'role.role',
+              },
+              {
+                  label: '',
+                  field: 'moreOptions',
+                  width: '20px',
+              },
+          ],
+      }
+  },
+  mounted() {
+      this.fetchCastCrews(),
+      this.fetchCastCrewRoles()
+  },
+  computed: {
+    allCastCrews() {
+          return this.castcrewsList
+      },
+      roles() {
+      return this.roles
+    },
+    getRoleName() {
+      return (roleId) => {
+        const role = this.roles.find((role) => role.id === roleId);
+        return role ? role.role : 'Unknown';
       };
     },
-    mounted() {
-      this.fetchCastCrews();
-      this.fetchCastCrewRoles();
-    },
-    methods: {
-      fetchCastCrews() {
-        fetchCastCrews()
-          .then(response => {
-            this.castCrews = response;
-          })
-          .catch(error => {
-            console.error('Failed to fetch castCrews:', error);
-          });
+  },
+  methods: {
+      editCastCrew(data) {
+        console.log(data);
+          this.showModal = true;
+          this.CastCrew = data;
       },
-      fetchCastCrewRoles(){
-        fetchCastCrewRoles()
-        .then(response => {
-          this.roles = response; 
-        })
-        .catch(error => {
-            console.error('Failed to fetch castCrewRoles:', error);
-        });
-      },
-      addCastCrew() {
-        if (this.newCastCrew.trim() !== '' ) {
-         addCastCrew(this.newCastCrew, this.selectedRole)
-          .then(() => {
-            console.log('CastCrew added successfully');
-            this.newCastCrew = '';
-            this.selectedRole = '';
-          })
-          .catch(error => {
-            console.error('Failed to add CastCrew:', error);
-          });
-        }
-      },
-      editCastCrew(castCrew) {
-        const newcastCrewName = prompt('Enter new castCrew:', castCrew.fullName);
-        if (newcastCrewName !== null ) {
-          editCastCrew(castCrew.id, newcastCrewName, castCrew.roleId)
-            .then(() => {
-              console.log('CastCrew edited successfully');
-              this.fetchCastCrews();
-            })
-            .catch(error => {
-              console.error('Failed to edit castCrew:', error);
-            });
-        }
-      },
-      deleteCastCrew(id) {
-        if (confirm('Are you sure you want to delete this castCrew?')) {
-          deleteCastCrew(id)
-            .then(() => {
-              console.log('CastCrew deleted successfully');
-              this.fetchCastCrews();
-            })
-            .catch(error => {
-              console.error('Failed to delete castCrew:', error);
-            });
-        }
-      },
-    },
-  };
-  </script>
-  
 
- 
+      toggleDeleteModal(data) {
+          console.log(data)
+          this.showDeleteModal = true;
+          this.CastCrew = data;
+      },
+
+      async deleteCastCrew(id) {
+          console.log(id)
+          try{
+              await deleteCastCrew(id)
+          } catch (err) {
+              console.log(err)
+          } finally {
+              await this.fetchCastCrews()
+          }
+      },
+      async fetchCastCrews(){
+          const response = await fetchCastCrews()
+          console.log(response)
+          this.castcrewsList = response
+      },
+      async fetchCastCrewRoles() {
+        const response = await fetchCastCrewRoles()
+        console.log(response)
+        this.roles = response;
+      }
+
+  },
+    
+}
+</script>
+
+<style lang="scss" scoped>
+.books-list {
+  width: 900px;
+  padding:  3% 0;
+  margin: auto;
+
+  .image-cell {
+      display: block;
+      width: 40px;
+      height: 40px;
+      margin: auto;
+  }
+  .icon-red {
+    color: red; // Specify the desired color here
+  }
+
+  .product-image{
+      width: 100%;
+  }
+
+  .more-options__btn{
+      .btn-group, .btn{
+          background: transparent;
+          border: none;
+          outline: none;
+
+          :focus {
+              border: none;
+          }
+
+      }
+  }
+}
+
+</style>
+
