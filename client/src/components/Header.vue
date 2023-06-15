@@ -11,6 +11,7 @@
         <b-nav-item href="#">Privacy</b-nav-item>
         <b-nav-item-dropdown text="Admin">
           <router-link to="/movies" class="nav-item nav-link w-auto m-auto">Movie</router-link>
+          <router-link to="/movieCard" class="nav-item nav-link w-auto m-auto">Movie card</router-link>
           <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Genres</router-link>
           <router-link to="/castCrewRoles" class="nav-item nav-link w-auto m-auto">Cast Crew Roles</router-link>
           <router-link to="/CastCrews" class="nav-item nav-link w-auto m-auto">Cast Crew</router-link>

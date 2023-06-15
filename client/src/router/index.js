@@ -176,12 +176,19 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
         meta: { requiresAuth: false }
-    },   
+    },
     {
         path: '/editMovie',
         name: 'editMovie',
         component: () =>
-          import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/EditMovie.vue'),
+            import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/EditMovie.vue'),
+        meta: { requiresAuth: false }
+    },
+    {
+        path: '/movieCard',
+        name: 'movieCard',
+        component: () =>
+            import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/MovieCard.vue'),
         meta: { requiresAuth: false }
     },
 
@@ -189,17 +196,17 @@ const routes = [{
         path: '/addWishlist',
         name: 'addWishlist',
         component: () =>
-          import ( /* webpackChunkName: "addWishlist" */ '../views/wishlist/AddToWishlist.vue'),
+            import ( /* webpackChunkName: "addWishlist" */ '../views/wishlist/AddToWishlist.vue'),
         meta: { requiresAuth: true }
     },
     {
         path: '/wishlist',
         name: 'wishlist',
         component: () =>
-          import ( /* webpackChunkName: "wishlist" */ '../views/wishlist/WishlistListing.vue'),
+            import ( /* webpackChunkName: "wishlist" */ '../views/wishlist/WishlistListing.vue'),
         meta: { requiresAuth: true }
     },
-]   
+]
 
 
 const router = createRouter({
