@@ -30,7 +30,9 @@
           :line-numbers="true"
       >
           <template v-slot:table-row="props">
-              
+            <span v-if="props.column.field == 'role.role'">
+                  {{ getRoleName(props.row.roleId) }}
+                 </span>
               <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
                   <b-dropdown right no-caret variant="default">
                       <template #button-content>
@@ -59,7 +61,8 @@
 import EditModal from './EditCastCrew.vue'
 
 import {  deleteCastCrew, fetchCastCrews } from '../../api/castCrew';
-import DeleteModal from '../../components/DeleteModal.vue'
+import DeleteModal from '../../components/DeleteModal.vue';
+import { fetchCastCrewRoles } from "../../api/castCrewRoles";
 
 
 export default {
@@ -73,10 +76,16 @@ export default {
           showDeleteModal: false,
           castcrewsList: [],
           CastCrew: {},
+          roles: [],
+          role: "",
           columns: [
               {
                   label: 'Cast Crew Name',
                   field: 'fullName',
+              },
+              {
+                  label: 'Cast Crew Role',
+                  field: 'role.role',
               },
               {
                   label: '',
@@ -87,17 +96,28 @@ export default {
       }
   },
   mounted() {
-      this.fetchCastCrews()
+      this.fetchCastCrews(),
+      this.fetchCastCrewRoles()
   },
   computed: {
     allCastCrews() {
           return this.castcrewsList
-      }
+      },
+      roles() {
+      return this.roles
+    },
+    getRoleName() {
+      return (roleId) => {
+        const role = this.roles.find((role) => role.id === roleId);
+        return role ? role.role : 'Unknown';
+      };
+    },
   },
   methods: {
-      editCastCrew(fullName) {
+      editCastCrew(data) {
+        console.log(data);
           this.showModal = true;
-          this.CastCrew = fullName
+          this.CastCrew = data;
       },
 
       toggleDeleteModal(data) {
@@ -120,9 +140,15 @@ export default {
           const response = await fetchCastCrews()
           console.log(response)
           this.castcrewsList = response
+      },
+      async fetchCastCrewRoles() {
+        const response = await fetchCastCrewRoles()
+        console.log(response)
+        this.roles = response;
       }
 
-  }
+  },
+    
 }
 </script>
 

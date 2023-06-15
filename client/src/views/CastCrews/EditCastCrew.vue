@@ -17,6 +17,10 @@
                           placeholder="Cast Crew Name"
                           required
                       ></b-form-input>
+
+                      <b-form-select v-model="CastCrew.roleId" required>
+            <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.role }}</option>
+          </b-form-select>
                   </b-form-group>
               </b-form>
           </div>
@@ -27,7 +31,17 @@
   import { editCastCrew } from '../../api/castCrew'
   import { toast } from 'vue3-toastify';
   import 'vue3-toastify/dist/index.css'; 
+  import { fetchCastCrewRoles } from "../../api/castCrewRoles";
+
+
   export default {
+    data (){
+        return {
+            roles: [],
+            role: ""
+        }
+    }
+,
       props: {
           showModal: {
               type: Boolean,
@@ -38,10 +52,30 @@
               default: null,
           }
       },
+
+      mounted() {
+        this.fetchCastCrewRoles();
+      },
+
+      computed: {
+        roles() {
+            return this.roles
+        },
+
+        getRoleName() {
+      return (roleId) => {
+        const role = this.roles.find((role) => role.id === roleId);
+        return role ? role.role : '';
+      };
+      },
+    },
+      
+
+
       methods: {
           async onSubmit() {
               try {
-                  await editCastCrew(this.CastCrew.id, this.CastCrew.fullName)
+                  await editCastCrew(this.CastCrew.id, this.CastCrew.fullName, this.CastCrew.roleId)
                   toast("Cast crew edited successfuly", {
                       autoClose: 1000,
                   });
@@ -50,7 +84,13 @@
                       autoClose: 1000,
                   });
               }
-          }
+          },
+
+          async fetchCastCrewRoles() {
+        const response = await fetchCastCrewRoles()
+        console.log(response)
+        this.roles = response;
+      }
       }
   }
   </script>
