@@ -15,7 +15,7 @@ const getExistingTables = async () => {
 const generateTables = async () => {
   const existingTables = await getExistingTables();
 
-  const newTables = ['Genres','CastCrewRole', 'CastCrew' ]; // Add the names of new tables to be created
+  const newTables = ['Genres','CastCrewRole', 'CastCrew', 'Movie', 'Wishlist' ]; // Add the names of new tables to be created
 
   for (const table of newTables) {
     if (!existingTables.includes(table)) {
@@ -45,11 +45,42 @@ const generateTables = async () => {
             CREATE TABLE CastCrew (
               id INT IDENTITY(1,1) PRIMARY KEY,
               fullName VARCHAR(255) NOT NULL,
-              roleId INT NOT NULL UNIQUE,
+              roleId INT NOT NULL,
               FOREIGN KEY (roleId) REFERENCES CastCrewRole(id)
             )
           `;
           break;
+
+        case 'Movie':
+          createTableQuery = `
+            CREATE TABLE Movie (
+              id INT IDENTITY(1, 1) PRIMARY KEY,
+              Title VARCHAR(255) NOT NULL,
+              MovieYear INT NOT NULL,
+              Description VARCHAR(255) NOT NULL,  
+              CoverImage VARCHAR(255) NOT NULL,
+              MovieLink VARCHAR(255) NOT NULL,
+              isPg BIT NOT NULL,
+              genreId INT NOT NULL,
+              FOREIGN KEY (genreId) REFERENCES Genres(id),
+            )
+           `;
+           break;
+
+          case 'Wishlist':
+            createTableQuery = `
+              CREATE TABLE Wishlist (
+                Id INT IDENTITY(1,1) PRIMARY KEY,
+                MovieTitle VARCHAR(255) NOT NULL,
+                MovieYear INT,
+                MovieCountry VARCHAR(255) NOT NULL,
+                Genre VARCHAR(255) NOT NULL,
+                Description VARCHAR(255) NOT NULL,
+                IsApproved SMALLINT DEFAULT 0 CHECK (IsApproved IN (-1, 0, 1)),
+                UserId VARCHAR(255) NOT NULL,
+              )
+            `;
+            break;
 
         default:
           console.log(`Table creation not defined for ${table}`);

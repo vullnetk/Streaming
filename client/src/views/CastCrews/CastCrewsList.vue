@@ -1,12 +1,12 @@
 <template>
   <div class="books-list">
       <div class="d-flex justify-content-end mb-3">
-    <router-link to="/addGenres" class="btn btn-primary">Add new genre</router-link>
+    <router-link to="/addcastCrew" class="btn btn-primary">Add new cast crew </router-link>
   </div>
       <vue-good-table
           styleClass="vgt-table condensed"
           :columns="columns"
-          :rows="allGenres"
+          :rows="allCastCrews"
           theme="polar-bear"
           :sort-options="{
               enabled: false, 
@@ -30,13 +30,15 @@
           :line-numbers="true"
       >
           <template v-slot:table-row="props">
-              
+            <span v-if="props.column.field == 'role.role'">
+                  {{ getRoleName(props.row.roleId) }}
+                 </span>
               <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
                   <b-dropdown right no-caret variant="default">
                       <template #button-content>
-                          <i class="fa-solid fa-ellipsis-vertical"></i>
+                          <i class="fa-solid fa-ellipsis-vertical icon-red"></i>
                       </template>
-                      <b-dropdown-item @click="editGenre(props.row)">Edit</b-dropdown-item>
+                      <b-dropdown-item @click="editCastCrew(props.row)">Edit</b-dropdown-item>
 
                       <b-dropdown-item @click="toggleDeleteModal(props.row)">Delete</b-dropdown-item>
                       
@@ -46,19 +48,21 @@
               </span>
           </template>
       </vue-good-table>
-      <EditModal v-model="showModal" :showModal="showModal" :Genre="Genre" />
+      <EditModal v-model="showModal" :showModal="showModal" :CastCrew="CastCrew" />
 
-      <DeleteModal v-model="showDeleteModal" :itemName="Genre.genre" :itemId="Genre.id" @deleteItem="deleteGenre"/>
+      <DeleteModal v-model="showDeleteModal" :itemName="CastCrew.fullName" :itemId="CastCrew.id" @deleteItem="deleteCastCrew"/>
       
       
+     
   </div>
 </template>
 
 <script>
-import EditModal from './EditGenre.vue'
+import EditModal from './EditCastCrew.vue'
 
-import {  deleteGenre, fetchGenres } from '../../api/genres';
-import DeleteModal from '../../components/DeleteModal.vue'
+import {  deleteCastCrew, fetchCastCrews } from '../../api/castCrew';
+import DeleteModal from '../../components/DeleteModal.vue';
+import { fetchCastCrewRoles } from "../../api/castCrewRoles";
 
 
 export default {
@@ -70,12 +74,18 @@ export default {
       return {
           showModal: false,
           showDeleteModal: false,
-          genresList: [],
-          Genre: {},
+          castcrewsList: [],
+          CastCrew: {},
+          roles: [],
+          role: "",
           columns: [
               {
-                  label: 'Genre Name',
-                  field: 'name',
+                  label: 'Cast Crew Name',
+                  field: 'fullName',
+              },
+              {
+                  label: 'Cast Crew Role',
+                  field: 'role.role',
               },
               {
                   label: '',
@@ -86,42 +96,59 @@ export default {
       }
   },
   mounted() {
-      this.fetchGenre()
+      this.fetchCastCrews(),
+      this.fetchCastCrewRoles()
   },
   computed: {
-    allGenres() {
-          return this.genresList
-      }
+    allCastCrews() {
+          return this.castcrewsList
+      },
+      roles() {
+      return this.roles
+    },
+    getRoleName() {
+      return (roleId) => {
+        const role = this.roles.find((role) => role.id === roleId);
+        return role ? role.role : 'Unknown';
+      };
+    },
   },
   methods: {
-      editGenre(genre) {
+      editCastCrew(data) {
+        console.log(data);
           this.showModal = true;
-          this.Genre = genre
+          this.CastCrew = data;
       },
 
       toggleDeleteModal(data) {
           console.log(data)
           this.showDeleteModal = true;
-          this.Genre = data;
+          this.CastCrew = data;
       },
 
-      async deleteGenre(id) {
+      async deleteCastCrew(id) {
           console.log(id)
           try{
-              await deleteGenre(id)
+              await deleteCastCrew(id)
           } catch (err) {
               console.log(err)
           } finally {
-              await this.fetchGenre()
+              await this.fetchCastCrews()
           }
       },
-      async fetchGenre(){
-          const response = await fetchGenres()
+      async fetchCastCrews(){
+          const response = await fetchCastCrews()
           console.log(response)
-          this.genresList = response
+          this.castcrewsList = response
+      },
+      async fetchCastCrewRoles() {
+        const response = await fetchCastCrewRoles()
+        console.log(response)
+        this.roles = response;
       }
 
-  }
+  },
+    
 }
 </script>
 
