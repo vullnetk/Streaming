@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-const connectionString = 'mongodb://127.0.0.1/eStreaming';
+const connectionString = 'mongodb://localhost:27017/eStreaming';
 
 mongoose.connect(connectionString, {
   useNewUrlParser: true,

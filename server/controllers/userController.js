@@ -40,3 +40,27 @@ exports.get_user = function (req, res) {
         return res.status(500).send(error.message);
       }
 };
+exports.edit_user = function (req, res) {
+
+    if(!ObjectID.isValid(req.body.uid)){
+        return res.status(400).send(`No record with given id:   ${req.body.uid}`)
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    let updatedUser = {
+        isSubscribed: true,
+        
+    }
+    
+    User.findByIdAndUpdate(req.body.uid, {$set: updatedUser}, {new: true}, (err, doc) => {
+        if(!err){
+            res.send(doc)
+        }else{
+            console.log('Error while updating category')
+        }
+    })
+}
