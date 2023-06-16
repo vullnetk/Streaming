@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="row">
-        <div v-for="movie in filteredMovies" :key="movie.id" class="col-md-3">
+        <div v-for="movie in displayedMovies" :key="movie.id" class="col-md-3">
           <div class="card mb-3">
             <img class="product-image" :src="!movie.CoverImage?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : movie.CoverImage" alt="">
             <div class="card-body">
@@ -16,6 +16,11 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="pagination-container">
+        <button class="pagination-button" @click="previousPage" :disabled="currentPage === 1">Previous</button>
+        <span class="pagination-current">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button class="pagination-button" @click="nextPage" :disabled="currentPage === totalPages">Next</button>
       </div>
     </div>
   </template>
@@ -29,6 +34,8 @@
       return {
         movies: [],
         searchQuery: '',
+        currentPage: 1,
+        pageSize: 8, // Number of movies per page
       };
     },
     created() {
@@ -45,9 +52,19 @@
           });
       },
       searchMovies() {
-        // Perform filtering based on the search query
         const query = this.searchQuery.toLowerCase();
+        this.currentPage = 1; // Reset to the first page when searching
         this.filteredMovies = this.movies.filter(movie => movie.Title.toLowerCase().includes(query));
+      },
+      previousPage() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+        }
+      },
+      nextPage() {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+        }
       },
     },
     computed: {
@@ -57,6 +74,14 @@
           return this.movies.filter(movie => movie.Title.toLowerCase().includes(query));
         }
         return this.movies;
+      },
+      displayedMovies() {
+        const startIndex = (this.currentPage - 1) * this.pageSize;
+        const endIndex = startIndex + this.pageSize;
+        return this.filteredMovies.slice(startIndex, endIndex);
+      },
+      totalPages() {
+        return Math.ceil(this.filteredMovies.length / this.pageSize);
       },
     },
   };
@@ -102,6 +127,31 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+  }
+  
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    margin: 0 5px;
+  }
+  
+  .pagination-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination-current {
+    margin: 0 10px;
   }
   </style>
   
