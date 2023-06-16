@@ -22,6 +22,9 @@
                                       <button type="submit" class="btn btn-theme">Login</button>
                                     </div>
                                 </form>
+                                <div class="d-grid gap-2 mt-3">
+                                  <button class="btn btn-theme" @click="signinWithGoogle">Sign in with Google</button>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6 d-none d-lg-inline-block">
@@ -41,6 +44,9 @@
 
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 // import { toast } from 'vue3-toastify';
 // import 'vue3-toastify/dist/index.css';  
 
@@ -64,7 +70,7 @@ export default {
         })
 
         if(!(this.email.includes("@eStreaming"))) {
-          this.$router.push({ name: 'home'})
+          this.$router.push({ name: 'profile'})
         } else {
           this.$router.push({ name: 'genres'})
         }
@@ -76,6 +82,34 @@ export default {
         console.log(this.errorMessage);
       }
 
+    },
+    async signinWithGoogle() {
+      try {
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
+        const isPopupBlocked = window.innerHeight === 0 || document.hidden;
+
+        if (isPopupBlocked) {
+          // Display an error message or provide an alternative sign-in method
+          console.log("Popup is blocked. Please allow popups to sign in with Google.");
+          return;
+        }
+        const { user } = await signInWithPopup(auth, provider);
+        await this.$store.dispatch('loginUser', {
+          email: user.email,
+          // password: user.password,
+        })
+        // Redirect based on the user's email domain
+        if (!(user.email.includes("@eStreaming"))) {
+          this.$router.push({ name: 'profile' });
+        } else {
+          this.$router.push({ name: 'genres' });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     },
     
     goToSignUp() {

@@ -9,9 +9,9 @@ mongoose.connect(connectionString, {
 });
 
 mongoose.connection.once('open', function () {
-  console.log('Connected');
+  console.log('Connected to Mongodb');
 }).on('error', function (error) {
-  console.log('Connection error: ' + error);
+  console.log('Mongodb connection error: ' + error);
 });
 
 

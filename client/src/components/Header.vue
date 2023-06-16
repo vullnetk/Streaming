@@ -22,7 +22,7 @@
 
     
         <b-navbar-nav class="ml-auto">
-          <b-nav-item href="#">Log out</b-nav-item>
+          <router-link to="/login" @click="signOut" class="nav-link w-auto m-auto">Logout</router-link>
           <router-link to="/profile" class="nav-item nav-link w-auto m-auto">Hello user</router-link>
         </b-navbar-nav>
       </b-collapse>
@@ -30,3 +30,51 @@
   </div>
 </template>
 
+<script>
+import { mapGetters } from 'vuex'
+export default {
+    data() {
+        return {
+            userLocalStorage: localStorage.getItem('user'),
+            width: null
+        }
+    },
+    computed: {
+        getSize(){
+            return this.width
+        },
+        ...mapGetters({
+            user: 'getUser'
+        }),
+    },
+    mounted(){
+        this.onResize()
+        this.$nextTick(() => {
+          window.addEventListener('resize', this.onResize);
+        })
+        console.log(this.userLocalStorage)
+    },
+    watch: {
+        '$store.state.authenticate.user.data': function() {
+            this.userLocalStorage = localStorage.getItem('user')
+        }
+    },
+    beforeDestroy() { 
+      window.removeEventListener('resize', this.onResize); 
+    },
+    methods: {
+        onResize() {
+            this.width = window.innerWidth
+        },
+        async signOut(){
+            try {
+                await this.$store.dispatch('logout')
+                this.$router.push({ path: "/login" })
+            } catch (err) {
+                console.log(err)
+            }
+        },
+    }
+
+}
+</script>
