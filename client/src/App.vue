@@ -1,16 +1,19 @@
 <template>
   <div id="app">
     <AppHeader />
+    
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import AppHeader from './components/Header.vue'
+
 export default {
   name: 'App',
   components:{
-    AppHeader
+    AppHeader,
+    
   }
 };
 </script>

@@ -7,6 +7,27 @@ import UserProfile from '../views/UserProfile.vue'
 
 
 const routes = [{
+        path: '/',
+        name: 'movieCards',
+        component: () =>
+            import ( /* webpackChunkName: "movieCards" */ '../views/movieCards/MovieCards.vue'),
+        meta: { requiresAuth: false }
+    },
+    {
+        path: '/genre/:id',
+        name: 'genreMovies',
+        component: () =>
+            import ( /* webpackChunkName: "genreMovies" */ '../views/genreMovies/GenreMovies.vue'),
+        meta: { requiresAuth: true }
+    },  
+    {
+        path: '/movies/details/:id',
+        name: 'movieDetails',
+        component: () =>
+            import ( /* webpackChunkName: "movieDetails" */ '../views/movies/MovieDetails.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/genres',
         name: 'genres',
         // route level code-splitting
@@ -176,30 +197,43 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
         meta: { requiresAuth: false }
-    },   
+    },
     {
         path: '/editMovie',
         name: 'editMovie',
         component: () =>
-          import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/EditMovie.vue'),
+            import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/EditMovie.vue'),
         meta: { requiresAuth: false }
     },
-
+    // {
+    //     path: '/movieCard',
+    //     name: 'movieCard',
+    //     component: () =>
+    //         import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/MovieCard.vue'),
+    //     meta: { requiresAuth: false }
+    // },
+    {
+        path: '/movies/details/:id',
+        name: 'movieDetails',
+        component: () =>
+            import ( /* webpackChunkName: "movieDetails" */ '../views/movies/MovieDetails.vue'),
+        meta: { requiresAuth: true }
+    },
     {
         path: '/addWishlist',
         name: 'addWishlist',
         component: () =>
-          import ( /* webpackChunkName: "addWishlist" */ '../views/wishlist/AddToWishlist.vue'),
+            import ( /* webpackChunkName: "addWishlist" */ '../views/wishlist/AddToWishlist.vue'),
         meta: { requiresAuth: true }
     },
     {
         path: '/wishlist',
         name: 'wishlist',
         component: () =>
-          import ( /* webpackChunkName: "wishlist" */ '../views/wishlist/WishlistListing.vue'),
+            import ( /* webpackChunkName: "wishlist" */ '../views/wishlist/WishlistListing.vue'),
         meta: { requiresAuth: true }
     },
-]   
+]
 
 
 const router = createRouter({
