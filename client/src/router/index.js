@@ -7,6 +7,20 @@ import UserProfile from '../views/UserProfile.vue'
 
 
 const routes = [{
+        path: '/movieCards',
+        name: 'movieCards',
+        component: () =>
+            import ( /* webpackChunkName: "movieCards" */ '../views/movieCards/MovieCards.vue'),
+        meta: { requiresAuth: false }
+    },
+    {
+        path: '/movies/details/:id',
+        name: 'movieDetails',
+        component: () =>
+            import ( /* webpackChunkName: "movieDetails" */ '../views/movies/MovieDetails.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/genres',
         name: 'genres',
         // route level code-splitting

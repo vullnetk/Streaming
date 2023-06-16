@@ -1,8 +1,10 @@
 import { createStore } from 'vuex'
 import authIndex from './modules/auth/authIndex'
+import moviesIndex from './modules/movies/moviesIndex'
 
 export default createStore({
     modules: {
-        authenticate: authIndex
+        authenticate: authIndex,
+        movies: moviesIndex
     }
 })
