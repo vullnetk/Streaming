@@ -27,6 +27,9 @@
                               <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-theme">Register</button>
                               </div>
+                              <div class="d-grid gap-2 mt-3">
+                                <button @click="registerWithGoogle" class="btn btn-theme">Sign up with Google</button>
+                              </div>
                           </form>
                       </div>
                   </div>
@@ -47,7 +50,8 @@
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import axios from 'axios';
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth";
 import { insertUser } from '@/api/user.js'
 // import { toast } from 'vue3-toastify';
 // import 'vue3-toastify/dist/index.css';  
@@ -62,26 +66,57 @@ export default {
   },
   methods: {
     async registerUser() {
-      const auth = getAuth();
-      try{
-        const response = await createUserWithEmailAndPassword(auth, this.email, this.password)
-        await updateProfile(auth.currentUser, {displayName: this.fullname})
-        this.$router.push({ path: "/login" })
-        //  toast("Registration Successful", {
-          console.log("Registration Successful", {
-          autoClose: 1000,
-        });
-      } catch(err) {
-        console.log(err)
-        //  toast("Registration Failed", {
-          console.log("Registration Failed", {
-          autoClose: 1000,
-        });
-      } finally {
-        this.registerUserWithRole({uid: auth.currentUser.uid, fullname: this.fullname, email: this.email})
-        // this.errorMessage = error.message
-      }
-    },
+      if(this.fullname && this.email && this.password){
+        const auth = getAuth();
+        try{
+          const response = await createUserWithEmailAndPassword(auth, this.email, this.password)
+          await updateProfile(auth.currentUser, {displayName: this.fullname})
+          this.$router.push({ path: "/login" })
+          //  toast("Registration Successful", {
+            console.log("Registration Successful", {
+              autoClose: 1000,
+            });
+          } catch(err) {
+            console.log(err)
+            //  toast("Registration Failed", {
+              console.log("Registration Failed", {
+                autoClose: 1000,
+              });
+            } finally {
+              this.registerUserWithRole({uid: auth.currentUser.uid, fullname: this.fullname, email: this.email})
+              // this.errorMessage = error.message
+            }
+          }else {
+            // Google sign-up
+            this.registerWithGoogle();
+          }
+        },
+        async registerWithGoogle() {
+          const auth = getAuth();
+          const provider = new GoogleAuthProvider();
+
+          try {
+            const { user } = await signInWithPopup(auth, provider);
+            const { displayName, email } = user;
+
+            if (displayName) {
+              // Use the display name from Google authentication
+              await updateProfile(user, { displayName });
+            } else {
+              // Prompt the user for their full name if the display name is not available
+              const fullname = prompt("Please enter your full name");
+              await updateProfile(user, { displayName: fullname });
+            }
+
+            // Register the user with their role
+            this.registerUserWithRole({ uid: user.uid, fullname: user.displayName || fullname, email });
+            this.$router.push({ path: "/login" });
+            console.log("Google Registration Successful");
+          } catch (err) {
+            console.log(err);
+            console.log("Google Registration Failed");
+          }
+        },
     async registerUserWithRole(user) {
       await insertUser(user)
     },
