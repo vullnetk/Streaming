@@ -103,9 +103,9 @@ export default {
         })
         // Redirect based on the user's email domain
         if (!(user.email.includes("@eStreaming"))) {
-          this.$router.push({ name: 'profile' });
+          this.$router.push({ name: 'home' });
         } else {
-          this.$router.push({ name: 'genres' });
+          this.$router.push({ name: 'movies' });
         }
       } catch (error) {
         console.log(error);

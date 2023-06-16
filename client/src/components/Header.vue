@@ -1,13 +1,13 @@
 <template>
   <div id="nav">
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <router-link to="/movieCard" class="nav-item nav-link w-auto m-auto">BlockBuster</router-link>
+      <router-link to="/" class="nav-item nav-link w-auto m-auto">BlockBuster</router-link>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <router-link to="/movieCards" class="nav-item nav-link w-auto m-auto">Home</router-link>
+        <router-link to="/" class="nav-item nav-link w-auto m-auto">Home</router-link>
         <b-nav-item href="#">Privacy</b-nav-item>
         <b-nav-item-dropdown text="Admin">
           <router-link to="/movies" class="nav-item nav-link w-auto m-auto">Movie</router-link>
