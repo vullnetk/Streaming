@@ -29,7 +29,7 @@
   import { fetchMovies } from '../../api/movies';
   
   export default {
-    name: 'MovieList',
+    // name: 'MovieList',
     data() {
       return {
         movies: [],

@@ -6,7 +6,7 @@
             
     
             <div class="image-container">
-                <img class="product-image" :src="!product.CoverImage?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : movie.CoverImage" alt="">
+                <img class="product-image" :src="!movie.CoverImage?.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : movie.CoverImage" alt="">
             </div>
     
             <div class="item-dtls">

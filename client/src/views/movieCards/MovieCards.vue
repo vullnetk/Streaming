@@ -1,14 +1,14 @@
 <template>
     <div class="home-view">
     
-        
+        <GenreNav :genres="genres" />
     
-        
-    
+
         <div class="category-products__page category-products m-auto">
             <div class="products-grid">
-                <div v-for="movie in allMovies" :key="movie._id">
-                  <router-link :to="{name: 'movieDetails', params: {id: movie._id}}" class="text-decoration-none"><MovieCard :movie="movie" /></router-link>
+                <div v-for="movie in allMovies" :key="movie.id">
+                    <!-- {{ movie}} -->
+                  <router-link :to="{name: 'movieDetails', params: {id: movie.id}}" class="text-decoration-none"><MovieCard :movie="movie" /></router-link>
                 </div>
             </div>
         </div>
@@ -17,23 +17,31 @@
     
     <script>
     import { mapGetters } from 'vuex'
-
+    import GenreNav from '@/components/GenreNav.vue'
     import MovieCard from '@/components/MovieCard.vue'
     export default {
         components: {
-            MovieCard
+            MovieCard,
+            GenreNav
         },
         data() {
             return {
                 allMovies: null
             }
         },	
-        computed: {
-    ...mapGetters(['fetchMovies']),
-  },
+//         computed: {
+//     ...mapGetters(['fetchMovies']),
+//   },
         async mounted() {
-            await this.$store.dispatch('getMovies'); 
-            this.allMovies = this.fetchMovies;
+            await this.$store.dispatch('getMovies');
+            await this.$store.dispatch('getGenres') 
+            this.allMovies = this.$store.state.movies.movies.movies;
+            // console.log(this.$store.state.movies)
+        },
+        computed: {
+            genres() {
+                return this.$store.state.genres.genres.genres
+            }
         },
         
         
