@@ -9,6 +9,19 @@ const wishlistController = require('../controllers/wishlistController');
 
 const router = express.Router();
 
+// Middleware to handle token
+const tokenMiddleware = (req, res, next) => {
+    const token = req.headers.authorization; // Assuming the token is sent in the Authorization header
+  
+    // Handle the token as needed (e.g., verify, decode, etc.)
+    // You can store it in req.token or attach it to the request context
+  
+    next();
+  };
+
+  // Apply tokenMiddleware to all routes
+router.use(tokenMiddleware);
+
 // Fetch all genres
 router.get('/genres', genresController.getAllGenres);
 // Get a Genre by Id

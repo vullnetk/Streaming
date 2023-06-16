@@ -1,5 +1,14 @@
 const mssqlConnection = require('../mssqlConnection');
+const admin = require('../firebaseService');
+const serviceAccount = require('../firebase-config.json');
+// const { sendNotificationToAllUsers } = require('../notificationService');
 
+// Initialize the Firebase Admin SDK with your service account credentials
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
 // Get all movies
 exports.getAllMovies = async (req, res) => {
     try {
@@ -37,12 +46,38 @@ exports.getMovieById = async (req, res) => {
         VALUES ('${Title}', ${MovieYear}, '${Description}', '${CoverImage}', '${MovieLink}', ${isPg ? 1 : 0}, ${genreId})
       `;
       await mssqlConnection.executeQuery(query);
+
+      // Notify all users about the new movie
+      const notification = {
+        title: 'New Movie Added',
+        body: `A new movie "${Title}" has been added. Check it out!`,
+        // Add any additional data or options for the notification as needed
+      };
+      await sendNotificationToAllUsers(notification);
+
       res.sendStatus(200);
     } catch (error) {
       console.error('Failed to create movie:', error);
       res.status(500).json({ error: 'Failed to create movie' });
     }
   };
+
+  // Function to send a notification to all users
+async function sendNotificationToAllUsers(notification) {
+  try {
+    const message = {
+      notification: notification,
+      topic: 'all_users', // Send the notification to a specific topic or use device tokens as needed
+    };
+
+    const response = await admin.messaging().send(message);
+    console.log('Notification sent successfully:', response);
+  } catch (error) {
+    console.error('Failed to send notification:', error);
+    throw new Error('Failed to send notification');
+  }
+}
+
 
   // Update a movie
   exports.updateMovie = async (req, res) => {

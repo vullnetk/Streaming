@@ -14,6 +14,8 @@ import 'vue-good-table-next/dist/vue-good-table-next.css'
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
+import { getMessaging, getToken } from "firebase/messaging";
+
 
 // import { getAnalytics } from "firebase/analytics";
 
@@ -29,6 +31,36 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
+
+
+// Get registration token. Initially this makes a network call, once retrieved
+// subsequent calls to getToken will return from cache.
+const messaging = getMessaging(app);
+getToken(messaging, { vapidKey: 'BGavuEkPNbq19CBpi8LhAZg23Cz-TjnXHyvxvhXzpYTfJ32EUGzZi-jV3kHbwMrPzzCX82q87_Xa7mvuaOyVHF8' }).then((currentToken) => {
+  if (currentToken) {
+    axios.post('api/getToken', { token: currentToken })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log('Token send successfully!')
+          } else {
+            console.log('Failed to send token to the server.');
+          }
+        })
+        .catch((error) => {
+          console.log('An error occurred while sending the token.', error);
+          // Handle the error accordingly
+          // ...
+        });
+  } else {
+    // Show permission request UI
+    console.log('No registration token available. Request permission to generate one.');
+    // ...
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+  // ...
+});
+
 export { app, auth }
 
 createApp(App).use(BootstrapVueNext).use(Vue3Toastify, { autoClose: 3000 }).use(VueGoodTablePlugin).use(store).use(router).mount('#app')
