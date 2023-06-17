@@ -83,6 +83,34 @@
           </div>
 
         </div>
+        <div class="requests">
+          <vue-good-table
+        styleClass="vgt-table condensed"
+        :columns="columns"
+        :rows="allWishlists"
+        theme="polar-bear"
+        :pagination-options="{
+          enabled: true,
+          mode: 'records',
+          perPage: 7,
+          position: 'bottom',
+          perPageDropdown: [3, 7, 9],
+          dropdownAllowAll: false,
+          nextLabel: 'Next',
+          prevLabel: 'Previous',
+          rowsPerPageLabel: 'Rows per page',
+        }"
+        :line-numbers="true"
+      >
+        <template v-slot:table-row="props">
+          <span v-if="props.column.field == 'Status'">
+                    <span v-if="props.row.IsApproved == 0">Pending</span>
+                    <span v-else-if="props.row.IsApproved == 1">Accepted</span>
+                    <span v-else-if="props.row.IsApproved == -1">Rejected</span>
+            </span>
+        </template>
+      </vue-good-table>
+        </div>
     </div>
 </template>
 
@@ -90,6 +118,7 @@
 
 import { mapGetters } from 'vuex'
 import { getAuth, updateProfile } from "firebase/auth";
+import {fetchWishlistByUserId} from  '../api/wishlist';
 import 'firebase/storage'
 import { getStorage, ref, uploadBytes, getMetadata, getDownloadURL  } from "firebase/storage";
 export default {
@@ -103,13 +132,46 @@ export default {
         imageData: null,
         progilePicture : null,
         initials : null,
+        wishlists: [],
+        columns: [
+          {
+            label: 'Movie Title',
+            field: 'MovieTitle',
+          },
+          {
+            label: 'Movie Year',
+            field: 'MovieYear',
+          },
+          {
+            label: 'Movie Country',
+            field: 'MovieCountry',
+          },
+          {
+            label: 'Genre',
+            field: 'Genre',
+          },
+          {
+            label: 'Description',
+            field: 'Description',
+          },
+          // {
+          //   label: 'Is Approved',
+          //   field: 'IsApproved',
+          // },
+          {
+            label: 'Status',
+            field: 'Status',
+          },
+        ],
         }
     },
     computed: {
     ...mapGetters({
         user: 'getUser'
     }),
-    
+    allWishlists() {
+        return this.wishlists;
+      },
   },
   mounted(){
     this.currentUser = this.user.data.providerData[0]
@@ -117,6 +179,8 @@ export default {
     this.img1 = this.currentUser.photoURL
     console.log("img1: " +this.img1)
     this.getInitials()
+    console.log(this.$store.state.authenticate.user.data.uid)
+    this.fetchWishlistByUserId();
   },
   methods: {
     editForm(){
@@ -209,7 +273,15 @@ export default {
         console.log(this.initials.length);
       }
       
-    }
+    },
+    async fetchWishlistByUserId() {
+        try {
+          const response = await fetchWishlistByUserId(this.$store.state.authenticate.user.data.uid);
+          this.wishlists = response;
+        } catch (error) {
+          console.error('Failed to fetch wishlists:', error);
+        }
+      },
   }
   }
 

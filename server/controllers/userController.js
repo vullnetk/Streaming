@@ -47,7 +47,7 @@ exports.get_user = function (req, res) {
 exports.updateSubscription = function (req, res) {
     const uid = req.params.id;
     // const userId = ObjectId(id);
-    console.log(uid)
+    // console.log(uid)
 
     User.findOneAndUpdate({ uid: uid }, { $set: { isSubscribed: true } }, { new: true })
     .exec()

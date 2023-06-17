@@ -19,7 +19,7 @@
           <router-link to="/genres" class="nav-item nav-link w-auto m-auto">Requests</router-link>
         </b-nav-item-dropdown>
       </b-navbar-nav>
-
+      <router-link to="/addRequest" class="nav-item nav-link w-auto m-auto">Make a request</router-link>
     
         <b-navbar-nav class="ml-auto">
           <router-link to="/login" @click="signOut" class="nav-link w-auto m-auto">Logout</router-link>

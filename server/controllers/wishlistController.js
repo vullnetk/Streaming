@@ -58,12 +58,15 @@ exports.getAllWishlists = async (req, res) => {
   
   //user wishlist
   exports.getUserWishlists = async (req, res) => {
-    const { userId } = req.params;
-  
+    // const { userId } = req.params;
+    const userId = req.params.id;
+    // console.log(req)
+    console.log(userId)
     try {
       const query = `SELECT * FROM Wishlist WHERE UserId = '${userId}'`;
       const result = await mssqlConnection.executeQuery(query);
       res.status(200).json(result);
+      console.log(result)
     } catch (error) {
       console.error('Failed to fetch user wishlists:', error);
       res.status(500).json({ error: 'Failed to fetch user wishlists' });

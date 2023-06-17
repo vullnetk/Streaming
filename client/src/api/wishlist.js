@@ -12,7 +12,8 @@ export function fetchWishlists() {
 
 // Get a wishlist by UserId
 export function fetchWishlistByUserId(userId) {
-  return axios.get(`/api/myWishlist`, userId)
+  console.log(userId)
+  return axios.get(`/api/myWishlist/${userId}`)
     .then(response => response.data)
     .catch(error => {
       console.error('Failed to fetch wishlist for this user:', error);
