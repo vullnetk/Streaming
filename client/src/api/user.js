@@ -28,7 +28,7 @@ export function insertUser(user) {
 export function getUser(uid) {
     return axios.get(`api/user/${uid}`)
 }
-export function edit_user(user) {
-    console.log(user)
-    return axios.put(`/api/editUser/${user.uid}`, user)
-}
+export function updateSubscription(userId) {
+    console.log(userId)
+    return axios.put(`api/user/${userId}/subscription`);
+  }
