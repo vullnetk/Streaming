@@ -116,7 +116,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "successp" */ '../views/payment/SuccessView.vue'),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true ,requiresSub:true}
     },
     {
         path: '/errorp',
@@ -262,10 +262,30 @@ router.beforeEach((to, from, next) => {
     } else {
         next();
     }
+
+    if (to.matched.some(route => route.meta.requiresSub)) {
+
+        const isSubscribed = checkSubscription();
+
+        if (checkSubscription) {
+            next();
+        } else {
+            next('/payment');
+        }
+    } else {
+        next();
+    }
 });
 
 function checkAuthentication() {
     if (auth.userExists()) return true
+    return false;
+}
+
+function checkSubscription() {
+    const useri = auth.getUser();
+    const subscription = useri.isSubscribed;
+    if (subscription) return true
     return false;
 }
 
