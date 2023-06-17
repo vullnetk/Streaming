@@ -6,6 +6,7 @@ const userController = require('../controllers/userController');
 const subscriptionController = require('../controllers/subscriptionController');
 const movieController = require('../controllers/movieController');
 const wishlistController = require('../controllers/wishlistController');
+const watchLaterController = require('../controllers/watchLaterController');
 
 const router = express.Router();
 
@@ -72,5 +73,10 @@ router.post('/addToWishlist', wishlistController.addToWishlist);
 router.put('/approveRequest/:id', wishlistController.approveRequest);
 router.put('/rejectRequest/:id', wishlistController.rejectRequest);
 router.get('/myWishlist', wishlistController.getUserWishlists)
+
+router.post('/addToWatchLater', watchLaterController.addToWatchLater);
+router.get('/getUserWatchLaterList', watchLaterController.getUserWatchLaterList);
+router.delete('/removeFromWatchLater/:movieId/:userId', watchLaterController.removeFromWatchLater);
+
 
 module.exports = router;
