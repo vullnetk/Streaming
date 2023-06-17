@@ -38,6 +38,13 @@ const routes = [{
         // meta: { requiresAuth: true }
     },
     {
+        path: '/addRequest',
+        name: 'request',
+        component: () =>
+            import ( /* webpackChunkName: "request" */ '../views/wishlist/AddToWishlist.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/addGenres',
         name: 'addGenres',
         // route level code-splitting

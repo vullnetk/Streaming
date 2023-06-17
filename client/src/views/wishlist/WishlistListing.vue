@@ -44,9 +44,6 @@
         </template>
       </vue-good-table>
     </div>
-    <div>
-      {{ wishlists }}
-    </div>
   </template>
   
   <script>
