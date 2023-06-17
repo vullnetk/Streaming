@@ -44,6 +44,9 @@ router.delete('/castCrews/delete/:id', castCrewController.deleteCastCrew);
 //User
 router.post('/insertUser', userController.insert_user);
 router.get('/user/:uid', userController.get_user);
+// router.put('/editUser/:uid', userController.edit_user);
+// Route for updating the subscription status of a user
+router.put('/user/:id/subscription', userController.updateSubscription);
 
 //Subscription
 router.get('/subscriptions', subscriptionController.get_subscriptions);

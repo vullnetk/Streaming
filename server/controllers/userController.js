@@ -1,5 +1,8 @@
 const User = require('../models/Users');
-var ObjectID = require('mongoose').Types.ObjectId
+const ObjectId = require('mongoose').Types.ObjectId;
+// var ObjectID = require('mongoose').Types.ObjectId
+// const { Types: { ObjectId } } = require('mongoose');
+// const { ObjectId } = require('mongoose').Types;
 
 
 exports.insert_user = function (req, res) {
@@ -40,3 +43,24 @@ exports.get_user = function (req, res) {
         return res.status(500).send(error.message);
       }
 };
+
+exports.updateSubscription = function (req, res) {
+    const uid = req.params.id;
+    // const userId = ObjectId(id);
+    console.log(uid)
+
+    User.findOneAndUpdate({ uid: uid }, { $set: { isSubscribed: true } }, { new: true })
+    .exec()
+    .then((updatedUser) => {
+      if (updatedUser) {
+        res.send(updatedUser);
+      } else {
+        console.log('User not found.');
+        res.status(404).send('User not found.');
+      }
+    })
+    .catch((error) => {
+      console.log('Error while updating user:', error);
+      res.status(500).send('Error while updating user.');
+    });
+  };
