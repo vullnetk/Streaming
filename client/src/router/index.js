@@ -8,7 +8,7 @@ import UserProfile from '../views/UserProfile.vue'
 
 const routes = [{
         path: '/',
-        name: 'movieCards',
+        name: 'home',
         component: () =>
             import ( /* webpackChunkName: "movieCards" */ '../views/movieCards/MovieCards.vue'),
         meta: { requiresAuth: false }
