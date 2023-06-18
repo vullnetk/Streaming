@@ -15,7 +15,7 @@ const getExistingTables = async () => {
 const generateTables = async () => {
   const existingTables = await getExistingTables();
 
-  const newTables = ['Genres','CastCrewRole', 'CastCrew', 'Movie', 'Wishlist' ]; // Add the names of new tables to be created
+  const newTables = ['Genres','CastCrewRole', 'CastCrew', 'Movie', 'Wishlist', 'CastCrewMovie' ]; // Add the names of new tables to be created
 
   for (const table of newTables) {
     if (!existingTables.includes(table)) {
@@ -95,6 +95,8 @@ const generateTables = async () => {
               );
               
               `;
+
+              break;
 
         default:
           console.log(`Table creation not defined for ${table}`);
