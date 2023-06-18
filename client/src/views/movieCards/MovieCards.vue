@@ -1,55 +1,62 @@
 <template>
-    <div class="home-view">
-    
+    <div class="home-view">   
         <GenreNav :genres="genres" />
         
         <div class="search-input">
 		<input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
 	    </div>
-
-        <div class="category-products__page category-products m-auto">
-            <div class="products-grid">
-                <div v-for="movie in allMovies" :key="movie.id">
-                    <!-- {{ movie}} -->
-                  <router-link :to="{name: 'movieDetails', params: {id: movie.id}}" class="text-decoration-none"><MovieCard :movie="movie" /></router-link>
-                </div>
+  
+      <div class="category-products__page category-products m-auto">
+        <div class="products-grid">
+          <div v-for="movie in allMovies" :key="movie.id">
+            <router-link :to="{ name: 'movieDetails', params: { id: movie.id } }" class="text-decoration-none">
+              <MovieCard :movie="movie" />
+            </router-link>
+            <div class="item-actions">
+              <!-- ?<b-dropdown-item @click="addToWatchLater(movie.id, userId)">Watch Later</b-dropdown-item> -->
+              <b-dropdown right no-caret variant="default">
+                      <template #button-content>
+                          <i class="fa-solid fa-ellipsis"></i>
+                      </template> 
+                      <b-dropdown-item @click="addToWatchLater(movie.id, userId)">Watch Later</b-dropdown-item>                     
+                </b-dropdown>
             </div>
+          </div>
         </div>
-    </div>    
-    </template>
-    
-    <script>
-    import { mapGetters } from 'vuex'
-    import GenreNav from '@/components/GenreNav.vue'
-    import MovieCard from '@/components/MovieCard.vue'
-    import {filterMovies} from '@/api/movies'
-    export default {
-        components: {
-            MovieCard,
-            GenreNav
-        },
-        data() {
-            return {
-                allMovies: null,
-                searchTerm: null,
-                timeoutId: null
-            }
-        },	
-//         computed: {
-//     ...mapGetters(['fetchMovies']),
-//   },
-        async mounted() {
-            await this.$store.dispatch('getMovies');
-            await this.$store.dispatch('getGenres') 
-            this.allMovies = this.$store.state.movies.movies.movies;
-            // console.log(this.$store.state.movies)
-        },
-        computed: {
-            genres() {
-                return this.$store.state.genres.genres.genres
-            }
-        },
-        watch: {
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import { mapGetters } from 'vuex';
+  import GenreNav from '@/components/GenreNav.vue';
+  import MovieCard from '@/components/MovieCard.vue';
+  import { addToWatchLater } from '@/api/watchLater.js'
+  
+  export default {
+    components: {
+      MovieCard,
+      GenreNav
+    },
+    data() {
+      return {
+        allMovies: null,
+        searchTerm: null,
+        timeoutId: null,
+        userId: this.$store.state.authenticate.user.data.uid
+      };
+    },
+    async mounted() {
+      await this.$store.dispatch('getMovies');
+      await this.$store.dispatch('getGenres');
+      this.allMovies = this.$store.state.movies.movies.movies;
+    },
+    computed: {
+      genres() {
+        return this.$store.state.genres.genres.genres;
+      }
+    },
+    watch: {
             'searchTerm': async function(){
                 if(this.timeoutId){
                     clearTimeout(this.timeoutId)
@@ -60,17 +67,29 @@
                 }, 500)
             }
         },
-        methods: {
-            async searchMovies() {
-            const response = await filterMovies(this.searchTerm)
-            this.allMovies = response.data
+    methods: {
+        async searchMovies() {
+                const response = await filterMovies(this.searchTerm)
+                this.allMovies = response.data
+            },
+        toggleWatchLater(movie) {
+            movie.showWatchLater = !movie.showWatchLater;
+                if (movie.showWatchLater) {
+                    this.addToWatchLater(movie);
+            }
         },
-        }
+        async addToWatchLater(movieId, userId) {
+            try {
+                await addToWatchLater(movieId, userId); // Call the API or perform the necessary logic to add to Watch Later
+                    console.log('Added to Watch Later successfully');
+            } catch (error) {
+                    console.error('Failed to add to Watch Later:', error);
+            }
+          }
         
-        
-    
     }
-    </script>
+  };
+  </script>
     
     <style lang="scss" scoped>
     
@@ -208,5 +227,21 @@
             margin-left: 22%;
         }
     }
-    </style>
-    
+
+    .item-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.dots {
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.btn-watch-later {
+  display: none;
+}
+</style>

@@ -8,7 +8,7 @@ import UserProfile from '../views/UserProfile.vue'
 
 const routes = [{
         path: '/',
-        name: 'movieCards',
+        name: 'home',
         component: () =>
             import ( /* webpackChunkName: "movieCards" */ '../views/movieCards/MovieCards.vue'),
         meta: { requiresAuth: false }
@@ -36,6 +36,13 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "genres" */ '../views/genres/GenresList.vue'),
         // meta: { requiresAuth: true }
+    },
+    {
+        path: '/addRequest',
+        name: 'request',
+        component: () =>
+            import ( /* webpackChunkName: "request" */ '../views/wishlist/AddToWishlist.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/addGenres',
