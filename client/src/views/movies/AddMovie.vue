@@ -32,39 +32,49 @@
           <option v-for="genre in genres" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
         </select>
       </div>
+      <div class="form-group">
+  <label for="castCrewIds">Cast and Crew:</label>
+  <select multiple v-model="newMovie.castCrewIds">
+    <option v-for="castCrew in castCrews" :key="castCrew.id" :value="castCrew.id">{{ castCrew.fullName }}</option>
+  </select>
+</div>
       <button type="submit" class="submit-btn">Add Movie</button>
     </form>
   </div>
 </template>
-  
-  <script>
-  import { createMovie } from '../../api/movies';
-  import { fetchGenres } from '@/api/genres';
-  import { toast } from 'vue3-toastify';
-  import 'vue3-toastify/dist/index.css'; 
 
-  
-  export default {
-    name: 'addMovie',
-    data() {
-      return {
-        newMovie: {
-          title: '',
-          year: null,
-          description: '',
-          coverImage: '',
-          movieLink: '',
-          isPg: false,
-          genreId: null
-        },
-        genres: []
-      };
-    },
-    created() {
-      this.fetchGenres();
-    }, 
-    methods: {
-      fetchGenres() {
+<script>
+import { createMovie } from '../../api/movies';
+import { fetchGenres } from '@/api/genres';
+import { fetchCastCrews } from '@/api/castCrew';
+import { addCastCrewMovie } from '@/api/castCrewMovies';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
+export default {
+  name: 'addMovie',
+  data() {
+    return {
+      newMovie: {
+        title: '',
+        year: null,
+        description: '',
+        coverImage: '',
+        movieLink: '',
+        isPg: false,
+        genreId: null,
+        castCrewIds: [],
+      },
+      genres: [],
+      castCrews: [],
+    };
+  },
+  created() {
+    this.fetchGenres();
+    this.fetchCastCrews();
+  },
+  methods: {
+    fetchGenres() {
       fetchGenres()
         .then(response => {
           this.genres = response;
@@ -72,35 +82,60 @@
         .catch(error => {
           console.error('Failed to fetch genres:', error);
         });
-      },
-      async onSubmit() {
-          try{
-            await createMovie(this.newMovie.title, this.newMovie.year, this.newMovie.description, this.newMovie.coverImage, this.newMovie.movieLink, this.newMovie.isPg, this.newMovie.genreId)
-            this.resetForm()
-            toast("Movie added successfuly", {
-              autoClose: 1000,
-            });
-          }catch{
-            toast("Adding Movie failed", {
-              autoClose: 1000,
-            });
-          }
-      },
+    },
+    fetchCastCrews() {
+      fetchCastCrews()
+        .then(response => {
+          this.castCrews = response;
+        })
+        .catch(error => {
+          console.error('Failed to fetch castCrews:', error);
+        });
+    },
+    async onSubmit() {
+      let movieResponse;
+      try {
+        // Create the movie and assign the response to movieResponse
+        movieResponse = await createMovie(
+          this.newMovie.title,
+          this.newMovie.year,
+          this.newMovie.description,
+          this.newMovie.coverImage,
+          this.newMovie.movieLink,
+          this.newMovie.isPg,
+          this.newMovie.genreId
+        );
 
-      resetForm() {
-        this.newMovie = {
-          title: '',
-          year: null,
-          description: '',
-          coverImage: '',
-          movieLink: '',
-          isPg: false,
-          genreId: null
-        };
-      },
-    }
-  };
-  </script>
+        // Create movie cast entries
+        for (const castCrewId of this.newMovie.castCrewIds) {
+          await addCastCrewMovie(castCrewId, movieResponse.id);
+        }
+
+        this.resetForm();
+        toast('Movie added successfully', {
+          autoClose: 100,
+        });
+      } catch {
+        toast('Adding Movie failed', {
+          autoClose: 1000,
+        });
+      }
+    },
+    resetForm() {
+      this.newMovie = {
+        title: '',
+        year: null,
+        description: '',
+        coverImage: '',
+        movieLink: '',
+        isPg: false,
+        genreId: null,
+        castCrewIds: [],
+      };
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .form-container {
@@ -130,8 +165,8 @@ label {
   font-weight: bold;
 }
 
-input[type="text"],
-input[type="number"],
+input[type='text'],
+input[type='number'],
 textarea {
   width: 100%;
   padding: 8px;
@@ -139,7 +174,7 @@ textarea {
   border-radius: 4px;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   margin-left: 8px;
 }
 
@@ -166,5 +201,4 @@ select {
 .submit-btn:hover {
   background-color: #0056b3;
 }
-
 </style>

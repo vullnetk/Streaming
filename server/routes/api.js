@@ -6,6 +6,7 @@ const userController = require('../controllers/userController');
 const subscriptionController = require('../controllers/subscriptionController');
 const movieController = require('../controllers/movieController');
 const wishlistController = require('../controllers/wishlistController');
+const castCrewMovieController = require ('../controllers/castCrewMovieController');
 
 const router = express.Router();
 
@@ -72,5 +73,19 @@ router.post('/addToWishlist', wishlistController.addToWishlist);
 router.put('/approveRequest/:id', wishlistController.approveRequest);
 router.put('/rejectRequest/:id', wishlistController.rejectRequest);
 router.get('/myWishlist/:id', wishlistController.getUserWishlists)
+
+//Cast Crew and Movie Table
+// Fetch all castCrewMovies
+router.get('/castCrewMovies', castCrewMovieController.getAllCastCrewMovies);
+
+// Add a new castCrewMovie
+router.post('/castCrewMovies/add', castCrewMovieController.createCastCrewMovie);
+
+// Edit a castCrewMovie
+router.put('/castCrewMovies/:id', castCrewMovieController.updateCastCrewMovie);
+
+// Delete a castCrewMovie 
+router.delete('/castCrewMovies/delete/:id', castCrewMovieController.deleteCastCrewMovie);
+
 
 module.exports = router;
