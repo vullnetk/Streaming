@@ -28,10 +28,10 @@
   </template>
   
   <script>
-  import { mapGetters } from 'vuex';
   import GenreNav from '@/components/GenreNav.vue';
   import MovieCard from '@/components/MovieCard.vue';
   import { addToWatchLater } from '@/api/watchLater.js'
+  import {filterMovies} from '@/api/movies'
   
   export default {
     components: {
