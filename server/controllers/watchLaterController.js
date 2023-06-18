@@ -2,11 +2,14 @@ const mssqlConnection = require('../mssqlConnection');
 
 // Controller method to save the user ID and movie ID into the WatchLater table
 exports.addToWatchLater = async (req, res) => {
-  const { MovieId, UserId } = req.body;
+  const { movieId, userId } = req.body;
+  console.log(req.body);
+  console.log(movieId);
+  console.log(userId)
   try {
     const query = `
-      INSERT INTO Wishlist (MovieId, UserId)
-      VALUES ('${MovieId}', '${UserId}')
+      INSERT INTO Watchlater (MovieId, UserId)
+      VALUES ('${movieId}', '${userId}')
     `;
     await mssqlConnection.executeQuery(query);
     res.sendStatus(200);

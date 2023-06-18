@@ -1,15 +1,17 @@
 import axios from 'axios';
 
 
-export function addToWatchLater(UserId, MovieId) {
+export function addToWatchLater(MovieId, UserId) {
     console.log(UserId)
-    watchLaterData = {
+    const watchLaterData = {
     movieId: MovieId,
     userId: UserId
   };
 
   try {
-    const response = axios.post('/api/addToWatchLater', watchLaterData = {});
+    console.log('abd');
+    console.log(watchLaterData);
+    const response = axios.post('/api/addToWatchLater', watchLaterData );
     console.log('Added to watchLater successfully');
     return response.data;
   } catch (error) {
