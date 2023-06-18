@@ -2,7 +2,10 @@
     <div class="home-view">
     
         <GenreNav :genres="genres" />
-    
+        
+        <div class="search-input">
+		<input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
+	    </div>
 
         <div class="category-products__page category-products m-auto">
             <div class="products-grid">
@@ -19,6 +22,7 @@
     import { mapGetters } from 'vuex'
     import GenreNav from '@/components/GenreNav.vue'
     import MovieCard from '@/components/MovieCard.vue'
+    import {filterMovies} from '@/api/movies'
     export default {
         components: {
             MovieCard,
@@ -26,7 +30,9 @@
         },
         data() {
             return {
-                allMovies: null
+                allMovies: null,
+                searchTerm: null,
+                timeoutId: null
             }
         },	
 //         computed: {
@@ -43,6 +49,23 @@
                 return this.$store.state.genres.genres.genres
             }
         },
+        watch: {
+            'searchTerm': async function(){
+                if(this.timeoutId){
+                    clearTimeout(this.timeoutId)
+                }
+                this.timeoutId = setTimeout(() => {
+                    this.searchMovies()
+                    this.timeoutId = null
+                }, 500)
+            }
+        },
+        methods: {
+            async searchMovies() {
+            const response = await filterMovies(this.searchTerm)
+            this.allMovies = response.data
+        },
+        }
         
         
     

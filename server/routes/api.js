@@ -71,6 +71,9 @@ router.get('/wishlists', wishlistController.getAllWishlists);
 router.post('/addToWishlist', wishlistController.addToWishlist);
 router.put('/approveRequest/:id', wishlistController.approveRequest);
 router.put('/rejectRequest/:id', wishlistController.rejectRequest);
-router.get('/myWishlist', wishlistController.getUserWishlists)
+router.get('/myWishlist', wishlistController.getUserWishlists);
+
+router.get('/filterMovie', movieController.findMovieByName);
+
 
 module.exports = router;
