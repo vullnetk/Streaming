@@ -6,7 +6,7 @@
                 <div class="row gap-3 align-items-center">
                     <div class="col-md-5 col-sm-12 col-xs-12">
                         <div class="product-image">
-                            <img :src="!product.CoverImage.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : movie.CoverImage" class="image-item" alt="">
+                            <img :src="!movie.CoverImage.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : movie.CoverImage" class="image-item" alt="">
                         </div>
                     </div>
     
@@ -17,7 +17,7 @@
                 
                         <hr />
                         <h3 class="price-container">
-                            {{ movie.MovieYear}}&euro;
+                            {{ movie.MovieYear}};
                         </h3>
                         
                         <hr />
@@ -57,8 +57,11 @@
         },
         async mounted() {
             this.movieId = this.$route.params.id
-            const response = await getMovieById(this.movieId)
-            this.movie = response.data
+            console.log(this.movieId)
+            this.movie = await getMovieById(this.movieId)
+            // console.log(response)
+            // this.movie = response.data
+            // console.log(this.movie)
         }
     }
     </script>

@@ -66,6 +66,8 @@ router.post('/createmovie', movieController.createMovie);
 router.put('/updatemovie/:id', movieController.updateMovie);
 // Delete a movie
 router.delete('/movie/delete/:id', movieController.deleteMovie);
+// Find movies by name
+router.get('/filterMovie', movieController.findMovieByName);
 
 //Wishlist
 router.get('/wishlists', wishlistController.getAllWishlists);

@@ -1,6 +1,10 @@
 <template>
-    <div class="home-view">
-      <GenreNav :genres="genres" />
+    <div class="home-view">   
+        <GenreNav :genres="genres" />
+        
+        <div class="search-input">
+		<input v-model="searchTerm" class="form-control form-control-lg form-control-borderless px-2" type="search" placeholder="Search...">
+	    </div>
   
       <div class="category-products__page category-products m-auto">
         <div class="products-grid">
@@ -14,10 +18,8 @@
                       <template #button-content>
                           <i class="fa-solid fa-ellipsis"></i>
                       </template> 
-                      <b-dropdown-item @click="addToWatchLater(movie.id, userId)">Watch Later</b-dropdown-item>
-
-                      
-                  </b-dropdown>
+                      <b-dropdown-item @click="addToWatchLater(movie.id, userId)">Watch Later</b-dropdown-item>                     
+                </b-dropdown>
             </div>
           </div>
         </div>
@@ -39,6 +41,8 @@
     data() {
       return {
         allMovies: null,
+        searchTerm: null,
+        timeoutId: null,
         userId: this.$store.state.authenticate.user.data.uid
       };
     },
@@ -52,22 +56,37 @@
         return this.$store.state.genres.genres.genres;
       }
     },
+    watch: {
+            'searchTerm': async function(){
+                if(this.timeoutId){
+                    clearTimeout(this.timeoutId)
+                }
+                this.timeoutId = setTimeout(() => {
+                    this.searchMovies()
+                    this.timeoutId = null
+                }, 500)
+            }
+        },
     methods: {
+        async searchMovies() {
+                const response = await filterMovies(this.searchTerm)
+                this.allMovies = response.data
+            },
         toggleWatchLater(movie) {
             movie.showWatchLater = !movie.showWatchLater;
                 if (movie.showWatchLater) {
                     this.addToWatchLater(movie);
             }
         },
-      async addToWatchLater(movieId, userId) {
-        try {
-            await addToWatchLater(movieId, userId); // Call the API or perform the necessary logic to add to Watch Later
-                console.log('Added to Watch Later successfully');
-        } catch (error) {
-                console.error('Failed to add to Watch Later:', error);
-        }
-      }
-
+        async addToWatchLater(movieId, userId) {
+            try {
+                await addToWatchLater(movieId, userId); // Call the API or perform the necessary logic to add to Watch Later
+                    console.log('Added to Watch Later successfully');
+            } catch (error) {
+                    console.error('Failed to add to Watch Later:', error);
+            }
+          }
+        
     }
   };
   </script>
