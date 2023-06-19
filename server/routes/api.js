@@ -75,7 +75,7 @@ router.put('/rejectRequest/:id', wishlistController.rejectRequest);
 router.get('/myWishlist/:id', wishlistController.getUserWishlists)
 
 router.post('/addToWatchLater', watchLaterController.addToWatchLater);
-router.get('/getUserWatchLaterList', watchLaterController.getUserWatchLaterList);
+router.get('/getUserWatchLaterList/:id', watchLaterController.getUserWatchLaterList);
 router.delete('/removeFromWatchLater/:movieId/:userId', watchLaterController.removeFromWatchLater);
 
 

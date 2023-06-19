@@ -21,7 +21,7 @@ exports.addToWatchLater = async (req, res) => {
 
 //user wishlist
 exports.getUserWatchLaterList = async (req, res) => {
-  const { userId } = req.params;
+  const userId  = req.params.id;
 
   try {
     const query = `SELECT * FROM WatchLater WHERE UserId = '${userId}'`;
