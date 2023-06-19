@@ -34,7 +34,7 @@
                 <span v-if="props.column.field == 'moreOptions'" class="more-options__btn text-right">
                     <b-dropdown right no-caret variant="default">
                         <template #button-content>
-                            <i class="fa-solid fa-ellipsis-vertical icon-red"></i>
+                            <i class="fa-solid fa-ellipsis-vertical icon-black"></i>
                         </template>
                         <b-dropdown-item @click="editCastCrewRole(props.row)">Edit</b-dropdown-item>
 

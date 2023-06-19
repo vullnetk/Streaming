@@ -5,8 +5,12 @@
         <b-form @submit="onSubmit">
           
             <b-form-input v-model="castCrewRole.role" placeholder="Role name" required></b-form-input>
-          
-          <b-button type="submit" variant="primary" style="margin-top: 20px;">Submit</b-button>
+
+            <div class="d-flex gap-2 justify-content-center">
+                    <b-button type="submit" variant="primary">Upload</b-button>
+
+                    <b-button @click="resetForm" variant="danger">Reset</b-button>
+                </div>
         </b-form>
       </div>
     </div>
@@ -30,10 +34,10 @@
         try {
           await addCastCrewRole(this.castCrewRole.role)
           this.resetForm()
-          toast("Upcoming product uploaded successfully", { autoClose: 1000 });
+          toast("Role uploaded successfully", { autoClose: 1000 });
           this.$router.push('/castCrewRoles'); // Navigate to the castCrewRoleList route
         } catch {
-          toast("Upcoming product upload failed", { autoClose: 1000 });
+          toast("Role upload failed", { autoClose: 1000 });
         }
       },
       resetForm() {
