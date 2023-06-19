@@ -26,22 +26,26 @@ exports.insert_user = function (req, res) {
 
 
 exports.get_user = function (req, res) {
-    let id = req.params.uid;
-
-    try {
-        User.findOne({ uid: id }).exec(function (err, user) {
-            if (user) {
-                res.send(user);
-            } 
-        });
-      } catch (error) {
-        if ([400, 403, 404].includes(error.code)) {
-          return res.status(error.code).send(error.message);
-        }
-    
-        console.error(error);
-        return res.status(500).send(error.message);
+  let id = req.params.uid;
+  User.findOne({ uid: id })
+    .exec()
+    .then(user => {
+      if (user) {
+        console.log(user)
+        res.send(user);
+      } else {
+        // Handle case when user is not found
+        res.sendStatus(404);
       }
+    })
+    .catch(error => {
+      if ([400, 403, 404].includes(error.code)) {
+        return res.status(error.code).send(error.message);
+      }
+
+      console.error(error);
+      return res.status(500).send(error.message);
+    });
 };
 
 exports.updateSubscription = function (req, res) {
