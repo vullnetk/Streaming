@@ -36,8 +36,8 @@ export default {
                 },
 
             ],
-            successURL: 'http://localhost:8080/success',
-            cancelURL: 'http://localhost:8080/error',
+            successURL: 'http://localhost:8080/#/successp',
+            cancelURL: 'http://localhost:8080/#/errorp',
         };
     },
     methods: {
