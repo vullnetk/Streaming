@@ -8,8 +8,8 @@
   
       <template v-if="!isAuthenticated">
         <div class="d-flex mt-2 gap-3">
-          <b-button variant="primary" to="/Account/Login">Sign In</b-button>
-          <b-button variant="primary" to="/Account/Register">Sign Up</b-button>
+          <b-button variant="primary" to="/login">Sign In</b-button>
+          <b-button variant="primary" to="/register">Sign Up</b-button>
         </div>
       </template>
   

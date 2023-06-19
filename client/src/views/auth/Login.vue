@@ -70,9 +70,13 @@ export default {
         })
 
         if(!(this.email.includes("@eStreaming"))) {
-          this.$router.push({ name: 'home'})
+          this.$router.push({ name: 'home'}).then(() =>
+          window.location.reload()
+          );
         } else {
-          this.$router.push({ name: 'movies'})
+          this.$router.push({ name: 'movies'}).then(() =>
+          window.location.reload()
+          );
         }
       } catch (error) {
         this.errorMessage = error.message
@@ -103,9 +107,13 @@ export default {
         })
         // Redirect based on the user's email domain
         if (!(user.email.includes("@eStreaming"))) {
-          this.$router.push({ name: 'home' });
+          this.$router.push({ name: 'home' }).then(() =>
+          window.location.reload()
+          );
         } else {
-          this.$router.push({ name: 'movies' });
+          this.$router.push({ name: 'movies' }).then(() =>
+          window.location.reload()
+          );;
         }
       } catch (error) {
         console.log(error);

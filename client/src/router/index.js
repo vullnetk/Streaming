@@ -3,15 +3,23 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import * as auth from '../helper/auth'
 import store from '../store'
 import UserProfile from '../views/UserProfile.vue'
+import {getUser} from '../api/user'
 
 
 
 const routes = [{
+        path: '/welcome',
+        name: 'welcome',
+        component: () =>
+            import ( /* webpackChunkName: "welcome" */ '../components/BeforeEnter'),
+        meta: { requiresAuth: false }
+    },
+    {
         path: '/',
         name: 'home',
         component: () =>
-            import ( /* webpackChunkName: "movieCards" */ '../views/movieCards/MovieCards.vue'),
-        meta: { requiresAuth: false }
+            import ( /* webpackChunkName: "welcome" */ '../views/movieCards/MovieCards.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/genre/:id',
@@ -35,7 +43,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "genres" */ '../views/genres/GenresList.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
     {
         path: '/addRequest',
@@ -52,7 +60,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "genres" */ '../views/genres/AddGenre.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
 
     {
@@ -63,7 +71,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "subs" */ '../views/subscriptions/SubsList.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
 
     {
@@ -74,7 +82,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "payment" */ '../views/payment/Payment.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true }
     },
     {
         path: '/subplans',
@@ -84,7 +92,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "subplans" */ '../views/payment/BasicPlan.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true }
     },
 
     {
@@ -95,7 +103,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "superplan" */ '../views/payment/SuperPlan.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true }
     },
     {
         path: '/ultraplan',
@@ -105,7 +113,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "ultraplan" */ '../views/payment/UltraPlan.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true }
     },
 
     {
@@ -126,7 +134,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "errorp" */ '../views/payment/ErrorView.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true }
     },
 
     {
@@ -137,7 +145,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "castCrewRoles" */ '../views/castCrewRoles/CastCrewRolesList.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
     {
         path: '/addcastCrewRoles',
@@ -147,7 +155,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "castCrewRolesInsert" */ '../views/castCrewRoles/AddCastCrewRole.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
     {
         path: '/castCrews',
@@ -157,7 +165,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "castCrews" */ '../views/CastCrews/CastCrewsList.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
     {
         path: '/addcastCrew',
@@ -167,7 +175,7 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "castCrewsInsert" */ '../views/CastCrews/AddCastCrew.vue'),
-        // meta: { requiresAuth: true }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
     {
         path: '/register',
@@ -195,7 +203,7 @@ const routes = [{
         name: 'movies',
         component: () =>
             import ( /* webpackChunkName: "movies" */ '../views/movies/MoviesList.vue'),
-        meta: { requiresAuth: false }
+        meta: { requiresAuth: true, requireAdminRole: true  }
     },
 
     {
@@ -203,14 +211,14 @@ const routes = [{
         name: 'addMovie',
         component: () =>
             import ( /* webpackChunkName: "movies" */ '../views/movies/AddMovie.vue'),
-        meta: { requiresAuth: false }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
     {
         path: '/editMovie',
         name: 'editMovie',
         component: () =>
             import ( /* webpackChunkName*: "movies" "/ */ '../views/movies/EditMovie.vue'),
-        meta: { requiresAuth: false }
+        meta: { requiresAuth: true, requireAdminRole: true }
     },
     // {
     //     path: '/movieCard',
@@ -240,6 +248,13 @@ const routes = [{
             import ( /* webpackChunkName: "wishlist" */ '../views/wishlist/WishlistListing.vue'),
         meta: { requiresAuth: true }
     },
+    {
+        path: '/unauthorized',
+        name: 'unauthorized',
+        component: () =>
+            import ( /* webpackChunkName: "unauthorized" */ '../views/auth/Authorized.vue'),
+        meta: { requiresAuth: true }
+    },
 ]
 
 
@@ -248,24 +263,46 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     if (to.matched.some(route => route.meta.requiresAuth)) {
 
         const isAuthenticated = checkAuthentication();
 
         if (isAuthenticated) {
-            store.commit('storeUser', auth.getUser());
-            next();
+            const user = auth.getUser();
+            store.commit('storeUser', user);
+
+            if (to.matched.some(route => route.meta.requireAdminRole)) {
+                const isAdminRole = await isAdmin(user)
+                console.log('isAdminRole:', isAdminRole); 
+                if (isAdminRole) {
+                    console.log(isAdminRole)
+                  next();
+                } else {
+                  // Redirect to unauthorized page or display an error message
+                  next('/unauthorized');
+                }
+              } 
+              else {
+                  next();
+              }
         } else {
-            next('/login');
+            next('/welcome');
         }
-    } else {
+    }else {
         next();
     }
 });
 
 function checkAuthentication() {
     if (auth.userExists()) return true
+    return false;
+}
+async function isAdmin(user) {
+    const u = await getUser(user.uid)
+    console.log(u)
+    console.log(u.data.isAdmin)
+    if(u.data.isAdmin) return true
     return false;
 }
 
