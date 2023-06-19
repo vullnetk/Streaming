@@ -2,22 +2,23 @@
     <div class="product-details">
         <div class="container mt-5" v-if="movie">
             <!-- product -->
+            
             <div class="product-content product-wrap clearfix product-deatil">
                 <div class="row gap-3 align-items-center">
                     <div class="col-md-5 col-sm-12 col-xs-12">
-                        <div class="product-image">
-                            <img :src="!movie.CoverImage.includes('http') ? 'https://www.bootdey.com/image/200x200/5F9EA0/000000' : movie.CoverImage" class="image-item" alt="">
+                        <div>
+                            <iframe :src="movie.MovieLink" frameborder="0" allowfullscreen></iframe>
                         </div>
                     </div>
     
                     <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
                         <h2 class="name mt-5">
-                            {{ movie.Title}}
+                            Movie Title: {{ movie.Title}}
                         </h2>
                 
                         <hr />
                         <h3 class="price-container">
-                            {{ movie.MovieYear}};
+                            Year: {{ movie.MovieYear}}
                         </h3>
                         
                         <hr />
