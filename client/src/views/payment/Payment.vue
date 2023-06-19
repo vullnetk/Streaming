@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>hey</h1>
     <div class="product-list">
     <div class="products-container">
       <div class="product">

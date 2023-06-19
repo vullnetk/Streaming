@@ -9,8 +9,11 @@
       <div class="category-products__page category-products m-auto">
         <div class="products-grid">
           <div v-for="movie in allMovies" :key="movie.id">
-            <router-link :to="{ name: 'movieDetails', params: { id: movie.id } }" class="text-decoration-none">
+            <router-link v-if="userSubscription" :to="{ name: 'movieDetails', params: { id: movie.id } }" class="text-decoration-none">
               <MovieCard :movie="movie" />
+            </router-link>
+            <router-link v-else :to="{name: 'payment'}" >
+                <MovieCard :movie="movie" />
             </router-link>
             <div class="item-actions">
               <!-- ?<b-dropdown-item @click="addToWatchLater(movie.id, userId)">Watch Later</b-dropdown-item> -->
@@ -32,6 +35,7 @@
   import MovieCard from '@/components/MovieCard.vue';
   import { addToWatchLater } from '@/api/watchLater.js'
   import {filterMovies} from '@/api/movies'
+  import {getUser} from '@/api/user'
   
   export default {
     components: {
@@ -43,13 +47,15 @@
         allMovies: null,
         searchTerm: null,
         timeoutId: null,
-        userId: this.$store.state.authenticate.user.data.uid
+        userId: this.$store.state.authenticate.user.data.uid,
+        userSubscription: null,
       };
     },
     async mounted() {
       await this.$store.dispatch('getMovies');
       await this.$store.dispatch('getGenres');
       this.allMovies = this.$store.state.movies.movies.movies;
+      this.getUser()
     },
     computed: {
       genres() {
@@ -85,8 +91,13 @@
             } catch (error) {
                     console.error('Failed to add to Watch Later:', error);
             }
-          }
-        
+          },
+          async getUser(){
+            const userId = this.$store.state.authenticate.user.data.uid
+          const userS = await getUser(userId)
+          this.userSubscription = userS.data.isSubscribed
+            console.log(this.userSubscription)
+        },
     }
   };
   </script>

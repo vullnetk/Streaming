@@ -2,7 +2,6 @@
     <div>
         <stripe-checkout ref="checkoutRef" mode="subscription" :pk="publishableKey" :line-items="lineItems"
             :success-url="successURL" :cancel-url="cancelURL" @loading="v => loading = v" />
-        <h1>hey</h1>
         <div class="product">
             <div class="image-container">
                 <img
