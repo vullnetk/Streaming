@@ -12,12 +12,15 @@
     
                     <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
                         <h2 class="name mt-5">
-                            {{ movie.Title}}
+                            Movie Name: {{ movie.Title}}
                         </h2>
                 
                         <hr />
                         <h3 class="price-container">
-                            {{ movie.MovieYear}};
+                          Year:  {{ movie.MovieYear}}
+                        </h3>
+                        <h3 class="price-container">
+                          
                         </h3>
                         
                         <hr />
