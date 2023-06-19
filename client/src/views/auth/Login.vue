@@ -6,7 +6,7 @@
                     <div class="row no-gutters">
                         <div class="col-lg-6">
                           <div class="p-5">
-                                <h4 class="h3 mb-30" style="color:crimson">Login</h4>
+                                <h4 class="h3 mb-30" style="color:darkblue">Login</h4>
                                 <br>
                                 <form @submit="signin">
                                     <div class="form-group">
@@ -149,8 +149,8 @@ export default {
     color: crimson !important;
 }
 .btn-theme {
-    background-color: crimson;
-    border-color: crimson;
+    background-color: darkblue;
+    border-color: darkblue;
     color: #fff;
 }
 

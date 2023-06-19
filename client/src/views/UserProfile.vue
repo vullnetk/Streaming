@@ -73,11 +73,19 @@
                     </div>
                     </div>
                     <div>
-                    
                   
                   </div>
                 </div>
             </b-form>
+            <div class="requests">
+              <h3>Watch Later List:</h3>
+                <ul>
+                  <li v-for="title in movieTitles" :key="title.id" >{{ title }}</li>
+                </ul>
+            </div>
+             <div>
+              <h3>Wishlist</h3>
+             </div>
               
             </div>
           </div>
@@ -119,6 +127,9 @@
 import { mapGetters } from 'vuex'
 import { getAuth, updateProfile } from "firebase/auth";
 import {fetchWishlistByUserId} from  '../api/wishlist';
+import {fetchUserWatchLaterList} from '../api/watchLater';
+import {getMovieById} from '../api/movies';
+
 import 'firebase/storage'
 import { getStorage, ref, uploadBytes, getMetadata, getDownloadURL  } from "firebase/storage";
 export default {
@@ -133,6 +144,8 @@ export default {
         progilePicture : null,
         initials : null,
         wishlists: [],
+        watchLaterMovies: [],
+        movieTitles: [],
         columns: [
           {
             label: 'Movie Title',
@@ -172,6 +185,9 @@ export default {
     allWishlists() {
         return this.wishlists;
       },
+    /*allwatchLaterMovies(){
+      return this.watchLaterMovies;
+    }*/
   },
   mounted(){
     this.currentUser = this.user.data.providerData[0]
@@ -181,6 +197,9 @@ export default {
     this.getInitials()
     console.log(this.$store.state.authenticate.user.data.uid)
     this.fetchWishlistByUserId();
+    this.fetchUserWatchLaterList();
+    //this.findMovieById();
+    this.getMovieTitles();
   },
   methods: {
     editForm(){
@@ -277,11 +296,39 @@ export default {
     async fetchWishlistByUserId() {
         try {
           const response = await fetchWishlistByUserId(this.$store.state.authenticate.user.data.uid);
+          console.log(response);
           this.wishlists = response;
+          console.log(this.wishlists);
         } catch (error) {
           console.error('Failed to fetch wishlists:', error);
         }
       },
+    
+      async fetchUserWatchLaterList() {
+        try {
+          const response = await fetchUserWatchLaterList(this.$store.state.authenticate.user.data.uid);
+            console.log(response);
+            this.watchLaterMovies = response;
+            console.log('aaaaaaaaaaa'+ this.watchLaterMovies);
+        } catch (error) {
+          console.error('Failed to fetch watch later movies:', error);
+        }
+      },
+      
+      async getMovieTitles() {
+          const movies = await fetchUserWatchLaterList(this.$store.state.authenticate.user.data.uid);
+          this.movieTitles = [];
+
+          for (const movie of movies) {
+            const movieId = movie.MovieId;
+            const movieData = await getMovieById(movieId);
+            const movieTitle = movieData.Title;
+            this.movieTitles.push(movieTitle);
+          }
+
+          return this.movieTitles;
+      }
+
   }
   }
 

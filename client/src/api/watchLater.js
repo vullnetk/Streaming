@@ -20,6 +20,18 @@ export function addToWatchLater(MovieId, UserId) {
   }
 }
 
+export function fetchUserWatchLaterList(UserId) {
+  return axios.get(`/api/getUserWatchLaterList/${UserId}`)
+    .then(response => response.data)
+    .catch(error => {
+      console.error('Failed to fetch user WatchLaterList:', error);
+      throw error;
+    });
+}
+
+
+
+
 export function removeFromWatchLater(movieId, userId) {
     return axios.delete(`/api/removeFromWatchLater/${movieId}/${userId}`)
       .then(response => response.data)
