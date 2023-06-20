@@ -176,7 +176,18 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "artikulli" */ '../views/artikulli/Artikulli.vue'),
+            import ( /* webpackChunkName: "artikulli" */ '../views/artikulli/ArtikulliList.vue'),
+        
+    },
+
+    {
+        path: '/addArtikulli',
+        name: 'addArtikulli',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "artikulli" */ '../views/artikulli/AddArtikulli.vue'),
         
     },
 

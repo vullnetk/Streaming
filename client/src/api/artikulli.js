@@ -11,7 +11,7 @@ export function fetchArtikulli() {
         });
 }
 
-export function addArtikuj(name,title) {
+export function addArtikulli(name,title) {
     return axios.post('/api/artikulli/add', { name,title })
         .then(response => {
             console.log('artikulli added successfully');

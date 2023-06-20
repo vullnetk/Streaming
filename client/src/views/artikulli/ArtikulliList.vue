@@ -1,7 +1,7 @@
 <template>
     <div class="books-list">
         <div class="d-flex justify-content-end mb-3">
-      <router-link to="/addartikullis" class="btn btn-primary">Add new cast crew role</router-link>
+      <router-link to="/addartikullis" class="btn btn-primary">Add new Artikulli</router-link>
     </div>
         <vue-good-table
             styleClass="vgt-table condensed"
@@ -36,7 +36,7 @@
                         <template #button-content>
                             <i class="fa-solid fa-ellipsis-vertical icon-red"></i>
                         </template>
-                        <b-dropdown-item @click="editartikulli(props.row)">Edit</b-dropdown-item>
+                        <b-dropdown-item @click="editArtikulli(props.row)">Edit</b-dropdown-item>
 
                         <b-dropdown-item @click="toggleDeleteModal(props.row)">Delete</b-dropdown-item>
                         
@@ -48,7 +48,7 @@
         </vue-good-table>
         <EditModal v-model="showModal" :showModal="showModal" :artikulli="artikulli" />
 
-        <DeleteModal v-model="showDeleteModal" :itemName="artikulli.role" :itemId="artikulli.id" @deleteItem="deleteartikulli"/>
+        <DeleteModal v-model="showDeleteModal" :itemName="artikulli.role" :itemId="artikulli.id" @deleteItem="deleteArtikulli"/>
         
         
        
@@ -99,7 +99,7 @@ export default {
         }
     },
     methods: {
-        editartikulli(data) {
+        editArtikulli(data) {
             console.log(data);
             this.showModal = true;
             this.artikulli = data

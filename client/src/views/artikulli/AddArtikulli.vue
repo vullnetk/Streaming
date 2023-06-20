@@ -14,7 +14,7 @@
   </template>
   
   <script>
-  import { addartikulli } from '../../api/artikulli'
+  import { addArtikulli } from '../../api/artikulli'
   import { toast } from 'vue3-toastify';
   import 'vue3-toastify/dist/index.css'; 
   export default {
@@ -30,7 +30,7 @@
     methods: {
       async onSubmit() {
         try {
-          await addartikulli(this.artikulli.name, this.artikulli.title)
+          await addArtikulli(this.artikulli.name, this.artikulli.title)
           this.resetForm()
           toast("Upcoming product uploaded successfully", { autoClose: 1000 });
           this.$router.push('/artikulli'); // Navigate to the artikulliList route
