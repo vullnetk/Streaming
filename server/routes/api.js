@@ -8,6 +8,8 @@ const movieController = require('../controllers/movieController');
 const wishlistController = require('../controllers/wishlistController');
 const watchLaterController = require('../controllers/watchLaterController');
 const artikulliController = require('../controllers/artikulliController');
+const komentiController = require('../controllers/komentiController');
+
 
 const router = express.Router();
 
@@ -42,6 +44,15 @@ router.post('/artikulli/add', artikulliController.addArtikuj);
 router.put('/artikulli/edit/:id', artikulliController.editArtikulli);
 // Delete a cast crew role
 router.delete('/artikulli/delete/:id', artikulliController.deleteArtikulli);
+
+// Fetch all Komenteet
+router.get('/komenti', komentiController.getKomentet);
+// Add a new artikull
+router.post('/komenti/add', komentiController.addKomenti);
+// Edit a cast crew role
+router.put('/komenti/edit/:id', komentiController.editKomenti);
+// Delete a cast crew role
+router.delete('/komenti/delete/:id', komentiController.deleteKomenti);
 
 
 

@@ -190,6 +190,29 @@ const routes = [{
             import ( /* webpackChunkName: "artikulli" */ '../views/artikulli/AddArtikulli.vue'),
         
     },
+    {
+        path: '/komenti',
+        name: 'komenti',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "artikulli" */ '../views/komenti/KomentiList.vue'),
+        
+    },
+
+    {
+        path: '/addKomenti',
+        name: 'addKomenti',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "artikulli" */ '../views/komenti/AddKomenti.vue'),
+        
+    },
+
+    
 
 
     
