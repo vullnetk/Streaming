@@ -5,8 +5,8 @@
 
 
             <b-form @submit="onSubmit">
-                <b-form-group label="Cast Crew Name">
-                    <b-form-input v-model="komenti.comment" placeholder="Cast Crew comment" required></b-form-input>
+                <b-form-group label="Komenti comment">
+                    <b-form-input v-model="komenti.comment" placeholder="Komenti comment" required></b-form-input>
                     <b-form-input v-model="komenti.title" placeholder=" title" required></b-form-input>
 
 

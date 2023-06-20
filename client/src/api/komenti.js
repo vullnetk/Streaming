@@ -3,7 +3,7 @@ import axios from 'axios';
 // const API_BASE_URL = '/api';
 
 export function fetchKomenti() {
-    return axios.get(`api/komenti`)
+    return axios.get(`api/  `)
         .then(response => response.data)
         .catch(error => {
             console.error('Failed to fetch komenti:', error);
@@ -36,7 +36,7 @@ export function editKomenti(id, comment, title, artikulliID) {
     
     return axios.put(`/api/komenti/edit/${id}`, data)
         .then(response => {
-            console.log('castCrew edited successfully');
+            console.log('komenti edited successfully');
             return response.data;
         })
         .catch(error => {

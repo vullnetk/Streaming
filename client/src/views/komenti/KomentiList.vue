@@ -1,7 +1,7 @@
 <template>
     <div class="books-list">
         <div class="d-flex justify-content-end mb-3">
-      <router-link to="/addcastCrew" class="btn btn-primary">Add new komenti </router-link>
+      <router-link to="/addKomenti" class="btn btn-primary">Add new komenti </router-link>
     </div>
         <vue-good-table
             styleClass="vgt-table condensed"
