@@ -12,6 +12,11 @@
                       required
                       
                   ></b-form-input>
+                  <div class="d-flex gap-2 justify-content-center">
+                    <b-button type="submit" variant="primary">Upload</b-button>
+
+                    <b-button @click="resetForm" variant="danger">Reset</b-button>
+                </div>
                   
               </b-form-group>
           </b-form>
@@ -40,11 +45,12 @@ export default{
           try{
               await addGenre(this.Genre.genre)
               this.resetForm()
-              toast("Upcoming product uploaded successfuly", {
-                  autoClose: 1000,
+              toast("Genre uploaded successfuly", {
+                  autoClose: 5000,
               });
+              this.$router.push('/genres')
           } catch {
-              toast("Upcoming product upload failed", {
+              toast("Genre upload failed", {
                   autoClose: 1000,
               });
           }

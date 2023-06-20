@@ -7,19 +7,13 @@
             <b-form @submit="onSubmit">
                 <b-form-group label="Cast Crew Name">
                     <b-form-input v-model="CastCrew.fullName" placeholder="Cast Crew name" required></b-form-input>
-
-
                     <b-form-select v-model="CastCrew.castCrewRoleId" placeholder="Select role" required>
                         <option :value="null">Please select an option</option>
                         <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.role }}</option>
                     </b-form-select>
-
-
                 </b-form-group>
-
                 <div class="d-flex gap-2 justify-content-center">
                     <b-button type="submit" variant="primary">Upload</b-button>
-
                     <b-button @click="resetForm" variant="danger">Reset</b-button>
                 </div>
 
@@ -74,6 +68,7 @@ export default {
                 toast("Cast uploaded successfuly", {
                     autoClose: 1000,
                 });
+                this.$router.push('/castCrews');
             } catch {
                 toast("Cast upload failed", {
                     autoClose: 1000,
