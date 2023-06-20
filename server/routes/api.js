@@ -7,6 +7,7 @@ const subscriptionController = require('../controllers/subscriptionController');
 const movieController = require('../controllers/movieController');
 const wishlistController = require('../controllers/wishlistController');
 const watchLaterController = require('../controllers/watchLaterController');
+const artikulliController = require('../controllers/artikulliController');
 
 const router = express.Router();
 
@@ -31,6 +32,17 @@ router.post('/castCrewRoles/add', castCrewRolesController.addCastCrewRole);
 router.put('/castCrewRoles/edit/:id', castCrewRolesController.editCastCrewRole);
 // Delete a cast crew role
 router.delete('/castCrewRoles/delete/:id', castCrewRolesController.deleteCastCrewRole);
+
+
+// Fetch all Artikujt
+router.get('/artikulli', artikulliController.getAllartikujt);
+// Add a new artikull
+router.post('/artikulli/add', artikulliController.addArtikuj);
+// Edit a cast crew role
+router.put('/artikulli/edit/:id', artikulliController.editArtikulli);
+// Delete a cast crew role
+router.delete('/artikulli/delete/:id', artikulliController.deleteArtikulli);
+
 
 
 // Fetch all castCrews

@@ -167,6 +167,21 @@ const routes = [{
             import ( /* webpackChunkName: "castCrews" */ '../views/CastCrews/CastCrewsList.vue'),
         meta: { requiresAuth: true, requireAdminRole: true }
     },
+
+
+    {
+        path: '/artikulli',
+        name: 'artikulli',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "artikulli" */ '../views/artikulli/Artikulli.vue'),
+        
+    },
+
+
+    
     {
         path: '/addcastCrew',
         name: 'addCastCrew',

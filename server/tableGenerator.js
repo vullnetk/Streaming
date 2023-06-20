@@ -92,6 +92,27 @@ const generateTables = async () => {
           `;
           break;
 
+          case 'Artikulli':
+            createTableQuery = `
+              CREATE TABLE Artikulli (
+                id INT IDENTITY(1,1) PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                title VARCHAR(255) NOT NULL
+              )
+            `;
+            break;
+  
+          case 'Komenti':
+            createTableQuery = `
+              CREATE TABLE Komenti (
+                id INT IDENTITY(1,1) PRIMARY KEY,
+                comment VARCHAR(255) NOT NULL,
+                title VARCHAR(255) NOT NULL,
+                FOREIGN KEY (artikulliID) REFERENCES Artikulli(id)
+              )
+            `;
+            break;
+
         default:
           console.log(`Table creation not defined for ${table}`);
           continue;
