@@ -67,7 +67,7 @@ exports.deleteTeam = async(req, res) => {
     const { id } = req.params;
     console.log(id);
     try {
-        const query = `DELETE FROM League WHERE id = ${id}`;
+        const query = `DELETE FROM Team WHERE id = ${id}`;
         await mssqlConnection.executeQuery(query);
         res.sendStatus(200);
     } catch (error) {
