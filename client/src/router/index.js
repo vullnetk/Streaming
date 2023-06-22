@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import * as auth from '../helper/auth'
 import store from '../store'
 import UserProfile from '../views/UserProfile.vue'
-import {getUser} from '../api/user'
+import { getUser } from '../api/user'
 
 
 
@@ -27,7 +27,7 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "genreMovies" */ '../views/genreMovies/GenreMovies.vue'),
         meta: { requiresAuth: true }
-    },  
+    },
     {
         path: '/movies/details/:id',
         name: 'movieDetails',
@@ -61,6 +61,26 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "genres" */ '../views/genres/AddGenre.vue'),
         meta: { requiresAuth: true, requireAdminRole: true }
+    },
+
+    {
+        path: '/leagues',
+        name: 'leagues',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "leagues" */ '../views/leagues/LeaguesList.vue'),
+    },
+    {
+        path: '/addLeagues',
+        name: 'addLeagues',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () =>
+            import ( /* webpackChunkName: "leagues" */ '../views/leagues/AddLeague.vue'),
+
     },
 
     {
@@ -203,7 +223,20 @@ const routes = [{
         name: 'movies',
         component: () =>
             import ( /* webpackChunkName: "movies" */ '../views/movies/MoviesList.vue'),
-        meta: { requiresAuth: true, requireAdminRole: true  }
+        meta: { requiresAuth: true, requireAdminRole: true }
+    },
+    {
+        path: '/teams',
+        name: 'teams',
+        component: () =>
+            import ( /* webpackChunkName: "teams" */ '../views/teams/TeamsList.vue'),
+
+    },
+    {
+        path: '/addTeam',
+        name: 'addTeam',
+        component: () =>
+            import ( /* webpackChunkName: "teams" */ '../views/teams/AddTeam.vue'),
     },
 
     {
@@ -263,7 +296,7 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
     if (to.matched.some(route => route.meta.requiresAuth)) {
 
         const isAuthenticated = checkAuthentication();
@@ -274,22 +307,21 @@ router.beforeEach(async (to, from, next) => {
 
             if (to.matched.some(route => route.meta.requireAdminRole)) {
                 const isAdminRole = await isAdmin(user)
-                console.log('isAdminRole:', isAdminRole); 
+                console.log('isAdminRole:', isAdminRole);
                 if (isAdminRole) {
                     console.log(isAdminRole)
-                  next();
+                    next();
                 } else {
-                  // Redirect to unauthorized page or display an error message
-                  next('/unauthorized');
+                    // Redirect to unauthorized page or display an error message
+                    next('/unauthorized');
                 }
-              } 
-              else {
-                  next();
-              }
+            } else {
+                next();
+            }
         } else {
             next('/welcome');
         }
-    }else {
+    } else {
         next();
     }
 });
@@ -302,7 +334,7 @@ async function isAdmin(user) {
     const u = await getUser(user.uid)
     console.log(u)
     console.log(u.data.isAdmin)
-    if(u.data.isAdmin) return true
+    if (u.data.isAdmin) return true
     return false;
 }
 

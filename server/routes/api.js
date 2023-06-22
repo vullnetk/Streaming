@@ -7,6 +7,8 @@ const subscriptionController = require('../controllers/subscriptionController');
 const movieController = require('../controllers/movieController');
 const wishlistController = require('../controllers/wishlistController');
 const watchLaterController = require('../controllers/watchLaterController');
+const leaguesController = require('../controllers/leaguesController');
+const teamController = require('../controllers/teamController');
 
 const router = express.Router();
 
@@ -20,6 +22,17 @@ router.post('/genres/add', genresController.addGenre);
 router.put('/genres/edit/:id', genresController.editGenre);
 // Delete a genre
 router.delete('/genres/delete/:id', genresController.deleteGenre);
+
+// Fetch all genres
+router.get('/leagues', leaguesController.getAllLeagues);
+// Get a Genre by Id
+router.get('/leagues/:id', leaguesController.getLeagueById);
+// Add a new genre
+router.post('/leagues/add', leaguesController.addLeague);
+// Edit a genre
+router.put('/leagues/edit/:id', leaguesController.editLeague);
+// Delete a genre
+router.delete('/leagues/delete/:id', leaguesController.deleteLeague);
 
 
 
@@ -68,6 +81,18 @@ router.put('/updatemovie/:id', movieController.updateMovie);
 router.delete('/movie/delete/:id', movieController.deleteMovie);
 // Find movies by name
 router.get('/filterMovie', movieController.findMovieByName);
+
+router.get('/teams', teamController.getAllTeams);
+// Get a single movie by ID
+router.get('/teams/:id', teamController.getTeamById);
+// Create a new movie
+router.post('/createteam', teamController.createTeam);
+// Update a movie
+router.put('/updateteam/:id', teamController.updateTeam);
+// Delete a movie
+router.delete('/team/delete/:id', teamController.deleteTeam);
+// Find movies by name
+
 
 //Wishlist
 router.get('/wishlists', wishlistController.getAllWishlists);
