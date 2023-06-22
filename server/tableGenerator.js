@@ -15,7 +15,7 @@ const getExistingTables = async () => {
 const generateTables = async () => {
   const existingTables = await getExistingTables();
 
-  const newTables = ['Genres','CastCrewRole', 'CastCrew', 'Movie', 'Wishlist', 'Watchlater' ]; // Add the names of new tables to be created
+  const newTables = ['Genres','CastCrewRole', 'CastCrew', 'Movie', 'Wishlist', 'Watchlater', 'Llogaria', 'Transaksioni' ]; // Add the names of new tables to be created
 
   for (const table of newTables) {
     if (!existingTables.includes(table)) {
@@ -88,6 +88,26 @@ const generateTables = async () => {
               Id INT IDENTITY(1,1) PRIMARY KEY,
               MovieId INT NOT NULL,
               UserId VARCHAR(255) NOT NULL
+            )
+          `;
+          break;
+
+          case 'Llogaria':
+          createTableQuery = `
+            CREATE TABLE Llogaria (
+              id INT IDENTITY(1,1) PRIMARY KEY,
+              name VARCHAR(255) NOT NULL
+            )
+          `;
+          break;
+
+        case 'Transaksioni':
+          createTableQuery = `
+            CREATE TABLE Transaksioni (
+              id INT IDENTITY(1,1) PRIMARY KEY,
+              name VARCHAR(255) NOT NULL,
+              llogariaId INT NOT NULL,
+              FOREIGN KEY (llogariaId) REFERENCES Llogaria(id)
             )
           `;
           break;

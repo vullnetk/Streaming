@@ -255,6 +255,30 @@ const routes = [{
             import ( /* webpackChunkName: "unauthorized" */ '../views/auth/Authorized.vue'),
         meta: { requiresAuth: true }
     },
+    {
+        path: '/llogari',
+        name: 'llogari',
+        component: () =>
+            import ( /* webpackChunkName: "llogari" */ '../views/llogari/LlogariList.vue'),
+    },
+    {
+        path: '/addllogari',
+        name: 'addLlogari',
+        component: () =>
+            import ( /* webpackChunkName: "addLlogari" */ '../views/llogari/AddLlogari.vue'),
+    },
+    {
+        path: '/transaksion',
+        name: 'transaksion',
+        component: () =>
+            import ( /* webpackChunkName: "transaksion" */ '../views/transaksioni/TransaksioniList.vue'),
+    },
+    {
+        path: '/addtransaksioni',
+        name: 'addTransaksioni',
+        component: () =>
+            import ( /* webpackChunkName: "addTransaksioni" */ '../views/transaksioni/AddTransaksion.vue'),
+    },
 ]
 
 

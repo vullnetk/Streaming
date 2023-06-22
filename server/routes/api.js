@@ -7,6 +7,8 @@ const subscriptionController = require('../controllers/subscriptionController');
 const movieController = require('../controllers/movieController');
 const wishlistController = require('../controllers/wishlistController');
 const watchLaterController = require('../controllers/watchLaterController');
+const llogariaController = require('../controllers/llogariaController');
+const transaksioniController = require('../controllers/transaksioniController');
 
 const router = express.Router();
 
@@ -79,6 +81,26 @@ router.get('/myWishlist/:id', wishlistController.getUserWishlists)
 router.post('/addToWatchLater', watchLaterController.addToWatchLater);
 router.get('/getUserWatchLaterList/:id', watchLaterController.getUserWatchLaterList);
 router.delete('/removeFromWatchLater/:movieId/:userId', watchLaterController.removeFromWatchLater);
+
+//Llogari
+// Fetch all 
+router.get('/llogari', llogariaController.getLlogari);
+// Add 
+router.post('/llogari/add', llogariaController.addLlogari);
+// Edit 
+router.put('/llogari/edit/:id', llogariaController.editLlogari);
+// Delete
+router.delete('/llogari/delete/:id', llogariaController.deleteLlogari);
+
+//Transaksioni
+// Fetch all castCrews
+router.get('/transaksione', transaksioniController.getTransaksione);
+// Add a new castCrew
+router.post('/transaksioni/add', transaksioniController.addTransaksioni);
+// Edit a castCrew
+router.put('/transaksioni/edit/:id', transaksioniController.editTransaksioni);
+// Delete a castCrew 
+router.delete('/transaksioni/delete/:id', transaksioniController.deleteTransaksioni);
 
 
 module.exports = router;
